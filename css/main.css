@@ -230,11 +230,11 @@ a {
 /* LC Branding + UI Guide Rules */
 .dabomb {
 	height: 53px;
-	width: 170px;
-	background-image: url(../images/lc-logo.svg);
+	width: 60px;
+	background-image: url(../images/devetry_logo.png);
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-position: 0 3px;
+	/* background-position: 0 3px; */
 }
 
 .navbar .site-title {
