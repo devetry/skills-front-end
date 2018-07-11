@@ -12,27 +12,27 @@ Before coming to Class 6, please complete the following tasks:
 
 cURL is a command-line tool that lets you simply make HTTP requests and see the response. This is a helpful tool for debugging, and for playing around the APIs of third-party sources that make their data available (like in the Udacity course below).
 
-Task | Resource Type | Link | Time Estimate | Instructions
------|---------------|------|---------------|--------------
-Follow-Along | Article | [cURL Tutorial][curl-tutorial] | 30 minutes | As you read this article, make sure to open up a Terminal window follow along with the examples.
+Done | Task | Resource Type | Link | Time Estimate | Instructions
+-----|------|---------------|------|---------------|--------------
+<input type="checkbox" v-model="checks.p7a" /> | Follow-Along | Article | [cURL Tutorial][curl-tutorial] | 30 minutes | As you read this article, make sure to open up a Terminal window follow along with the examples.
 
 
 ### JSON
 
 When sending and receiving data, there are a variety of different standards for the exact syntax of how to structure the data as text. These days, the most common standard is JSON.
 
-Task | Resource Type | Link | Time Estimate | Instructions
------|---------------|------|---------------|--------------
-Read | Article | [What is JSON: the 3 minute JSON Tutorial][3-minute-json] | 3 minutes! | This (very old) article gives a quick intro to JSON.
-Read  | Stack Overflow Post | [What is JSON and Why Should I Use it?][what-is-json] | a few more minutes | Quickly read this SO post on JSON.
+Done | Task | Resource Type | Link | Time Estimate | Instructions
+-----|------|---------------|------|---------------|--------------
+<input type="checkbox" v-model="checks.p7b" /> | Read | Article | [What is JSON: the 3 minute JSON Tutorial][3-minute-json] | 3 minutes! | This (very old) article gives a quick intro to JSON.
+<input type="checkbox" v-model="checks.p7c" /> | Read  | Stack Overflow Post | [What is JSON and Why Should I Use it?][what-is-json] | a few more minutes | Quickly read this SO post on JSON.
 
 ### AJAX
 
 In Javascript, you can make a request to a server, wait for the response to come back, and then do something with the response, without the user ever having to leave or refresh the page. This technique is called AJAX. This is how Gmail, for example, makes your newly received email appear instantly in your inbox, even without you refreshing the page.
 
-Task | Resource Type | Link | Time Estimate | Instructions
------|---------------|------|---------------|--------------
-Do   | Interactive Course | [Udacity: Intro to AJAX][intro-to-ajax] | 6 hours | This course covers the basics of making AJAX requests. You will see how to build a project that reads data from third-party services like Google Maps and Wikipedia by making AJAX requests to those sites' publicly-facing APIs.
+Done | Task | Resource Type | Link | Time Estimate | Instructions
+-----|------|---------------|------|---------------|--------------
+<input type="checkbox" v-model="checks.p7d" /> | Do   | Interactive Course | [Udacity: Intro to AJAX][intro-to-ajax] | 6 hours | This course covers the basics of making AJAX requests. You will see how to build a project that reads data from third-party services like Google Maps and Wikipedia by making AJAX requests to those sites' publicly-facing APIs.
 
 
 

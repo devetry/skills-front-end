@@ -11,24 +11,24 @@ For the first few weeks, we will be using an interactive textbook called [Eloque
 
 Did you read the notes? Great, time to dive into learning some Javascript!
 
-Task | Resource Type | Link | Time Estimate | Instructions
------|---------------|------|---------------|-------------
-Read | Interactive Book | [EloquentJS: Introduction ][eloquent-intro] | 10 minutes | In the Intro, the author Marijn Haverbeke expounds on the nature of his book, the nature of code, and the nature of the universe.
-Read | Interactive Book | [EloquentJS 1: Values, Types an Operators][eloquent1] | 30 minutes | This chapter covers all the basics: simple math, strings, datatypes, printing, boolean operators, etc.
-Read | Interactive Book | [EloquentJS 2: Program Structure][eloquent2] | 1.5 hours | In chapter 2 you will learn how to build simple programs using control-flow structures like variables, functions, conditionals and loops.
-Read | Interactive Book | [EloquentJS 3: Functions][eloquent3] | 3 hours | This chapter talks in depth about functions, touching on a bunch of important but tricky concepts including: recursion, side effects vs return values, and the fact that JS functions can be stored in variables just like any other data type.
+Dont | Task | Resource Type | Link | Time Estimate | Instructions
+-----|-----|---------------|------|---------------|-------------
+<input type="checkbox" v-model="checks.p1a" /> | Read | Interactive Book | [EloquentJS: Introduction ][eloquent-intro] | 10 minutes | In the Intro, the author Marijn Haverbeke expounds on the nature of his book, the nature of code, and the nature of the universe.
+<input type="checkbox" v-model="checks.p1b" /> | Read | Interactive Book | [EloquentJS 1: Values, Types an Operators][eloquent1] | 30 minutes | This chapter covers all the basics: simple math, strings, datatypes, printing, boolean operators, etc.
+<input type="checkbox" v-model="checks.p1c" /> | Read | Interactive Book | [EloquentJS 2: Program Structure][eloquent2] | 1.5 hours | In chapter 2 you will learn how to build simple programs using control-flow structures like variables, functions, conditionals and loops.
+<input type="checkbox" v-model="checks.p1d" /> | Read | Interactive Book | [EloquentJS 3: Functions][eloquent3] | 3 hours | This chapter talks in depth about functions, touching on a bunch of important but tricky concepts including: recursion, side effects vs return values, and the fact that JS functions can be stored in variables just like any other data type.
 
 ## Git Review (optional)
 
 You have already seen some of these resources in Unit 2. But you might find it useful to go through them again.
 
-Task | Resource Type | Link | Time Estimate | Instructions
-|----|---------------|------|---------------|-------------
-Read | Article | [What is Version Control?][what-is-version-control] | 10 minutes | This article introduces the concept of "version control" and why it is useful for software development.
-Read | Article | [What is Git?][what-is-git] | 10 minutes | This article talks in detail about a particular version control system called Git, which we will be using heavily throughout this class.
-Do | Interactive Course | [Codecademy: Git Workflow][codecademy1] | 30 minutes | Practice the basics of using Git on the command line.
-Do | Interactive Course | [Codecademy: Git Backtracking][codecademy2] | 30 minutes | Practice using Git to undo your changes and go back to previous versions of your work.
-Do | Tutorial | [Github Guides: Hello World][github-hello-world] | 30 minutes | This tutorial provides a brief intro to using the website GitHub to share and collaborate on Git repositories.
+Done | Task | Resource Type | Link | Time Estimate | Instructions
+-----|------|---------------|------|---------------|-------------
+<input type="checkbox" v-model="checks.p1e" /> | Read | Article | [What is Version Control?][what-is-version-control] | 10 minutes | This article introduces the concept of "version control" and why it is useful for software development.
+<input type="checkbox" v-model="checks.p1f" /> | Read | Article | [What is Git?][what-is-git] | 10 minutes | This article talks in detail about a particular version control system called Git, which we will be using heavily throughout this class.
+<input type="checkbox" v-model="checks.p1g" /> | Do | Interactive Course | [Codecademy: Git Workflow][codecademy1] | 30 minutes | Practice the basics of using Git on the command line.
+<input type="checkbox" v-model="checks.p1h" /> | Do | Interactive Course | [Codecademy: Git Backtracking][codecademy2] | 30 minutes | Practice using Git to undo your changes and go back to previous versions of your work.
+<input type="checkbox" v-model="checks.p1i" /> |Do | Tutorial | [Github Guides: Hello World][github-hello-world] | 30 minutes | This tutorial provides a brief intro to using the website GitHub to share and collaborate on Git repositories.
 
 
 ## Notes

@@ -1,26 +1,26 @@
 template:
-    url: https://github.com/LaunchCodeEducation/Template-Light
+    url: https://github.com/devetry/Template-Light
     # directory: ../../../../Template-Light
 
 # Base URL of the published website
-baseUrl: https://education.launchcode.org/skills-front-end
+# baseUrl: https://education.launchcode.org/skills-front-end
 
 exclude:
     - materials/studios/studio1
 
 # Used to link to the GitHub project
 github:
-    user: LaunchCodeEducation
+    user: devetry
     repo: skills-front-end
 
-metaTitle: LC101
+metaTitle: Coding 103
 siteTitle: 'Unit 3: Front-End Web Skill Track'
 
 # Google Custom Search Engine ID
-cseId: 014657181352409571810:szqov91hhf4
+# cseId: 014657181352409571810:szqov91hhf4
 
-# Google Analytics ID
-gaId: UA-78748330-5
+# # Google Analytics ID
+# gaId: UA-78748330-5
 
 homeBg: https://launchcode.org/assets/cover_banner_blue-8152795f6794e4bbb9fae2a63ad5bb01.jpg
 

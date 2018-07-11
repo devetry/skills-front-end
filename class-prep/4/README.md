@@ -9,10 +9,10 @@ Before coming to Class 4, please complete the following tasks:
 
 You already have experience working with HTML `<form>` elements, but it is worth spending some more time on them and seeing how Javascript can fit into the picture.
 
-Task | Resource Type | Link | Time Estimate | Instructions
------|---------------|------|---------------|--------------
-Watch | Video | [Interacting With Forms in Javascript](https://youtu.be/4sJ1PZQujBc) | 35 minutes | Watch this introduction to some of the ways that you can work with forms in your Javascript code
-Read | Interactive Book | [EloquentJS 18: Forms][eloquent18] | 2.5 hours | This chapters goes over Javascript's historical and current relationship to forms, and the many different types of `<input>` that you can put inside a form.
+Done | Task | Resource Type | Link | Time Estimate | Instructions
+-----|------|---------------|------|---------------|--------------
+<input type="checkbox" v-model="checks.p4a" /> | Watch | Video | [Interacting With Forms in Javascript](https://youtu.be/4sJ1PZQujBc) | 35 minutes | Watch this introduction to some of the ways that you can work with forms in your Javascript code
+<input type="checkbox" v-model="checks.p4b" /> | Read | Interactive Book | [EloquentJS 18: Forms][eloquent18] | 2.5 hours | This chapters goes over Javascript's historical and current relationship to forms, and the many different types of `<input>` that you can put inside a form.
 
 
 ### Client-side Validation
