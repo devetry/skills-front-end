@@ -17,5 +17,5 @@ Done | Task | Resource Type | Link | Time Estimate | Instructions
 
 
 [eloquent5]: http://eloquentjavascript.net/05_higher_order.html
-[map-reduce-filter]: https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter
+[map-reduce-filter]: https://web.archive.org/web/20160304095123/https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter
 [eloquent14]: http://eloquentjavascript.net/14_event.html
