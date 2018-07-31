@@ -151,7 +151,7 @@
 
                 <section id="content" class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
                                         <h1>Mario 5</h1>
-                    <p>Today you won't be adding any new features to the project. Instead you will refactor the existing codebase to use jQuery instead of &quot;vanilla&quot; Javascript for manipulating the DOM.</p>
+                    <p>Today you won't be adding any new features to the project. Instead you will refactor the existing codebase to use Vue.js instead of &quot;vanilla&quot; Javascript for manipulating the DOM.</p>
 <h2 id="obtaining-the-starter-code">Obtaining the Starter Code</h2>
 <ol>
 <li>
@@ -190,57 +190,70 @@ Already up-to-date.</code></pre>
 <p>Let's look over the code. Notice the following changes:</p>
 <ul>
 <li>
-<p>At the bottom of <code>mario.html</code>, we have an additional <code>&lt;script&gt;</code> tag right before the one that loads <code>mario.js</code>. This script imports the jQuery library so that we can use jQuery's methods in our own code.</p>
+<p>At the bottom of <code>mario.html</code>, we have an additional <code>&lt;script&gt;</code> tag right before the one that loads <code>mario.js</code>. This script imports the Vue.js library so that we can use Vue's methods in our own code.</p>
 </li>
 <li>
-<p>We have refactored a few lines of code to use jQuery syntax:</p>
+<p>We have refactored the code to (partially) use Vue syntax:</p>
 <ul>
 <li>
-<p>registering the form's submission event handler:</p>
-<pre><code class="language-js">$("#draw-form").submit( function(event) { // lots of code ... } );</code></pre>
+<p><code>pyramidRows</code>, instead of directly modifying the DOM, now returns a list of strings: one for each row.</p>
 </li>
 <li>
-<p>The <code>clearError</code> function is implemented using jQuery.</p>
+<p>We ripped most of the page out of html, and made it a view template</p>
 </li>
 <li>
-<p>At the bottom of <code>drawPyramid</code>, we use jQuery to create a <code>&lt;p&gt;</code> element whose inner HTML is equal to the string for the current row.</p>
+<p>The &quot;Draw a pyramid&quot; button uses Vue's <code>@click="clearAndRedraw"</code> instead of <code>addEventListener</code>.</p>
+</li>
+<li>
+<p>Vue will give the height input a class if <code>this.error</code> is set (that's what the <code>:class="error ? 'invalid-field': null"</code> bit is doing).</p>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="your-task">Your Task</h2>
-<p>First, note that we provide a few helpful links in the <a href="./#tips">Tips</a> section below.</p>
+<p>Heads up: there's a <em>lot</em> of new things in today's class. If you get stuck, see if you can write down a reason that you're stuck as a google search term. Some examples:</p>
+<ul>
+<li>vue js display value</li>
+<li>vue js input value</li>
+<li>vue js computed property</li>
+<li>vue js for loop</li>
+</ul>
+<p>You might also try looking through the <a href="https://vuejs.org/v2/guide/">documentation for Vue.js</a>, which is quite complete.</p>
 <p>Now go ahead and complete the following tasks:</p>
 <ol>
 <li>
-<p>At the end of the loop in <code>drawPyramid</code>, we have created a <code>&lt;p&gt;</code> element with the string content. But there is no longer any code to insert the element onto the page. Use jQuery to append the element as a child of the <code>&lt;div id="pyramid"&gt;</code>.</p>
+<p>Fill out the <code>checkForErrors</code> function. It should return an error message if the given <code>heightStr</code> value is the empty string, not a number, less than 1, or more than 100. If there are no errors, return <code>null</code>.</p>
 </li>
 <li>
-<p>Now you should be seeing a new pyramid added to the screen whenever you submit the form. Next, reimplement the &quot;clearing away&quot; of the previous pyramid so that they don't accumulate. At the beginning of <code>drawPyramid</code>, add some jQuery code to remove all the content inside the <code>#pyramid</code> container div.</p>
+<p>Since the error message from <code>checkForErrors</code> is being set in <code>clearAndRedraw</code> as <code>this.error</code>, it's available in our template. Use the double curly braces (<code>{{ }}</code>) to show the error message. Hint: you won't need to refer to <code>this</code>, the template assumes that's where your data is stored.</p>
 </li>
 <li>
-<p>Currently the pyramids always have a height of 5, no matter what the user types. Let's fix that. Inside the <code>submit</code> handler callback, replace the hard-coded <code>"5"</code> with some jQuery code to extract the actual value from the <code>&lt;input&gt;</code>.</p>
+<p>Currently the pyramids always have a height of 5, no matter what the user types. Let's fix that. Inside the template, add a <code>v-model</code> directive so that the input is kept in sync with <code>heightStr</code>.</p>
 </li>
 <li>
-<p>The last thing to bring back is the error messages. When the user types something &quot;bad&quot;, we currently don't provide any useful feedback. Fill in the implementation of <code>displayError</code> so that the user once again is able to see what she did wrong. You can use our implementation of <code>clearError</code> as a loose reference.</p>
+<p>Computed properties are functions on your view's data that are kept up-to-date. They're called whenever the data changes, but otherwise cached. Create a new computed property called <code>error</code> that it returns the result of <code>checkForErrors(this.heightStr)</code>. Also, delete the <code>error</code> entry in <code>data:</code> and the update in <code>clearAndRedraw</code>.</p>
+</li>
+<li>
+<p>Fill out the other computed property, <code>rows</code>. It should return the result of calling <code>pyramidRows</code> on <code>this.height</code>. Use your new computed property towards the bottom of <code>clearAndRedraw</code>.</p>
+</li>
+<li>
+<p>Now we get to the good stuff! We're going to get to remove that ugly direct DOM manipulation code (almost all of <code>clearAndRedraw</code>). Instead, we'll use a nice declarative template. Inside the <code>#pyramid</code> div in the template, add the following:</p>
 </li>
 </ol>
-<h2 id="tips">Tips</h2>
-<ul>
-<li>
-<p>This <a href="https://gist.github.com/liamcurry/2597326">jQuery vs Vanilla JS Cheatsheet</a> is useful (doesn't cover everything though).</p>
-</li>
-<li>
-<p>You will probably need to use at least the following jQuery functions:</p>
-<ul>
-<li><a href="https://api.jquery.com/val/">.val()</a></li>
-<li><a href="https://api.jquery.com/append/">.append()</a></li>
-<li><a href="https://api.jquery.com/text/">.text()</a></li>
-<li><a href="https://api.jquery.com/addClass">.addClass()</a></li>
-<li><a href="https://api.jquery.com/empty/">.empty()</a></li>
-</ul>
-</li>
-</ul>
+<pre><code class="language-html">&lt;p v-for="row in rows" v-html="row" /&gt;</code></pre>
+<p>This says &quot;make a <code>&lt;p&gt;</code> for each entry in rows. Each p's <code>.innerHTML</code> should be set to the value of <code>row</code>.</p>
+<ol start="7">
+<li>Delete all the DOM manipulation code from <code>clearAndRedraw</code>. It should just look like this:</li>
+</ol>
+<pre><code class="language-js">// Stop the form from causing a page refresh.
+evt.preventDefault();
+
+if (this.error) {
+    // Stop drawing, we've got errors.
+    return;
+}
+
+this.height = parseInt(this.heightStr);</code></pre>
 <h2 id="committing-your-changes">Committing Your Changes</h2>
 <ol>
 <li>
@@ -249,7 +262,7 @@ Already up-to-date.</code></pre>
 </li>
 <li>
 <p>Then commit, along with a descriptive message.</p>
-<pre><code class="language-nohighlight">$ git commit -m "refactor to use jQuery"</code></pre>
+<pre><code class="language-nohighlight">$ git commit -m "refactor to use Vue.js"</code></pre>
 </li>
 </ol>
                                     </section>

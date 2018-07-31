@@ -152,33 +152,14 @@
                 <section id="content" class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
                                         <h1>Class 6 Prep</h1>
                     <p>Before coming to Class 5, please complete the following tasks:</p>
-<h3 id="quick-review-of-css-selectors">Quick Review of CSS Selectors</h3>
-<p>The main topic for this Prep Work is a Javascript library called jQuery. But first, let's quickly review a little bit of CSS. You might have already done the Codecademy lesson below in a previous Unit. But before moving on to jQuery, it will be helpful to review a familiar example of how selectors work.</p>
-<table>
-<thead>
-<tr>
-<th>Done</th>
-<th>Task</th>
-<th>Resource Type</th>
-<th>Link</th>
-<th>Time Estimate</th>
-<th>Instructions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><input type="checkbox" v-model="checks.p6a" /></td>
-<td>Do</td>
-<td>Interactive Course</td>
-<td><a href="https://www.codecademy.com/en/courses/web-beginner-en-WF0CF/resume?curriculum_id=50579fb998b470000202dc8b">Codecademy: CSS Selectors</a></td>
-<td>30 minutes</td>
-<td>This lesson introduces &quot;selectors&quot;, which allow you to specify exactly <em>which</em> elements you want to apply a style to.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="jquery">jQuery</h3>
-<p>You have seen how to manipulate the DOM using Javascript functions like <code>document.getElementById()</code>. That's great, but once you start trying to combine a few operations to do something complicated, the &quot;vanilla&quot; way adds up to a clumsy experience. jQuery is a Javascript library that provides a very flexible syntax for querying and modifying the DOM, and chaining those statements together to form more complicated operations. jQuery does additional things as well, but its biggest role is to make it easier to do fancy things with the DOM.</p>
-<p>Eloquent Javascript does not talk about jQuery, so we will use a short Udacity course.</p>
+<h3 id="js-history-and-jquery">JS History and jQuery</h3>
+<p>Javascript's original purpose was as a way to decorate pages by sprinkling extra functionality onto a page. For example: you might want to animate a button spin when you hover over it, or rotate between several photos of a project when they are clicked. Early on, only some browsers supported javascript, so it was only used for non-essential functionality.</p>
+<p>As web developers attempted to make fancier pages, and users began to expect more out of websites, javascript became more popular. But there were inconsistencies between different browsers. For example, some browsers allowed you to access characters in a string with <code>'apple'[0]</code>, but IE did not. There's a <a href="https://stackoverflow.com/a/2599388/1586229">great answer on Stack Overflow</a> that gives more examples of differences.</p>
+<p>Luckily, a glorious champion appeared: jQuery! jQuery is still today the most popular javascript library, used on something like 50% of all websites<sup>[citation needed]</sup>. During the days when javascript was inconsistent between different browsers, it papered over these differences. Old versions of Internet Explorer didn't support setting <code>.innerHTML</code> for some elements. But with jQuery, you could call <code>$('.content').html(replacementValue)</code> instead of writing that terrible <code>setHtml</code> function described in the <a href="https://stackoverflow.com/a/2599388/1586229">stack overflow answer above</a>.</p>
+<p>In addition to providing compatibility between different browsers, jQuery was just easier to use. The functions were shorter (<code>$('#num-rows')</code> instead of <code>document.getElementById('num-rows')</code>), and it had <a href="http://youmightnotneedjquery.com/#json">helper functions for common uses</a>.</p>
+<p>On the bad side of things, jQuery (and regular javascript too) promoted an undisciplined approach to laying out code, keeping with its origins as a way to &quot;sprinkle on&quot; unimportant functionality. As web sites transistioned to web <em>apps</em>, code bases began to break down under their own weight. It was too easy to write <code>$('img').click(function() { $('.modal').show(); })</code> and too hard to figure out why the logo now showed the login modal. (Or something like that. Examples are hard to think of. At some point in your career, you'll inherit a codebase written in this era and you'll start to understand why we've moved on 😉).</p>
+<p>jQuery is still relevant because so many websites use it. You'll come across it on your career But most <em>new</em> sites are written with a different style of library, such as React, Angular2+, or Vue. The main difference between these libraries and their predecessors is that instead of writing DOM manipulation code (like <code>var newMovie = document.createElement('li'); newMovie.innerText = 'Snowpiercer'; document.querySelector('#movies-list').appendChild(newMovie')</code>), we write a code for how we'd like the DOM to look <em>once</em>, and the library takes care of making it so.</p>
+<p>React was the first library to popularize this approach. I find Vue to be easier to use, though, so that's what we'll be learning in this class.</p>
 <table>
 <thead>
 <tr>
@@ -193,11 +174,11 @@
 <tbody>
 <tr>
 <td><input type="checkbox" v-model="checks.p6b" /></td>
-<td>Do</td>
-<td>Interactive Course</td>
-<td><a href="https://classroom.udacity.com/courses/ud245/lessons/3314378535/concepts/33166386820923#">Udacity: Intro to jQuery</a></td>
-<td>6 hours</td>
-<td>Go through the entire course. (This one is very short compared to other Udacity courses.)</td>
+<td>Code along</td>
+<td>Video Course</td>
+<td><a href="https://www.vuemastery.com/courses/intro-to-vue-js/vue-instance">Intro to Vue.js</a></td>
+<td>2 hours</td>
+<td>Follow along with the course.</td>
 </tr>
 </tbody>
 </table>
