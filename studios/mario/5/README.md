@@ -3,7 +3,7 @@ title: "Mario 5"
 currentMenu: studios
 ---
 
-Today you won't be adding any new features to the project. Instead you will refactor the existing codebase to use jQuery instead of "vanilla" Javascript for manipulating the DOM.
+Today you won't be adding any new features to the project. Instead you will refactor the existing codebase to use Vue.js instead of "vanilla" Javascript for manipulating the DOM.
 
 ## Obtaining the Starter Code
 
@@ -58,47 +58,63 @@ If you open up the page in a browser, you will see that it looks the same as las
 
 Let's look over the code. Notice the following changes:
 
-- At the bottom of `mario.html`, we have an additional `<script>` tag right before the one that loads `mario.js`. This script imports the jQuery library so that we can use jQuery's methods in our own code.
+- At the bottom of `mario.html`, we have an additional `<script>` tag right before the one that loads `mario.js`. This script imports the Vue.js library so that we can use Vue's methods in our own code.
 
-- We have refactored a few lines of code to use jQuery syntax:
+- We have refactored the code to (partially) use Vue syntax:
 
-	- registering the form's submission event handler:
+	- `pyramidRows`, instead of directly modifying the DOM, now returns a list of strings: one for each row.
 
-		```js
-		$("#draw-form").submit( function(event) { // lots of code ... } );
-		```
+	- We ripped most of the page out of html, and made it a view template
 
-	- The `clearError` function is implemented using jQuery.
+    - The "Draw a pyramid" button uses Vue's `@click="clearAndRedraw"` instead of `addEventListener`.
 
-	- At the bottom of `drawPyramid`, we use jQuery to create a `<p>` element whose inner HTML is equal to the string for the current row.
+	- Vue will give the height input a class if `this.error` is set (that's what the `:class="error ? 'invalid-field': null"` bit is doing).
 
 
 ## Your Task
 
-First, note that we provide a few helpful links in the [Tips](./#tips) section below.
+Heads up: there's a _lot_ of new things in today's class. If you get stuck, see if you can write down a reason that you're stuck as a google search term. Some examples:
+
+- vue js display value
+- vue js input value
+- vue js computed property
+- vue js for loop
+
+You might also try looking through the [documentation for Vue.js][vue-js-docs], which is quite complete.
 
 Now go ahead and complete the following tasks:
 
-1. At the end of the loop in `drawPyramid`, we have created a `<p>` element with the string content. But there is no longer any code to insert the element onto the page. Use jQuery to append the element as a child of the `<div id="pyramid">`.
+1. Fill out the `checkForErrors` function. It should return an error message if the given `heightStr` value is the empty string, not a number, less than 1, or more than 100. If there are no errors, return `null`.
 
-2. Now you should be seeing a new pyramid added to the screen whenever you submit the form. Next, reimplement the "clearing away" of the previous pyramid so that they don't accumulate. At the beginning of `drawPyramid`, add some jQuery code to remove all the content inside the `#pyramid` container div.
+2. Since the error message from `checkForErrors` is being set in `clearAndRedraw` as `this.error`, it's available in our template. Use the double curly braces (`{{ }}`) to show the error message. Hint: you won't need to refer to `this`, the template assumes that's where your data is stored.
 
-3. Currently the pyramids always have a height of 5, no matter what the user types. Let's fix that. Inside the `submit` handler callback, replace the hard-coded `"5"` with some jQuery code to extract the actual value from the `<input>`.
+3. Currently the pyramids always have a height of 5, no matter what the user types. Let's fix that. Inside the template, add a `v-model` directive so that the input is kept in sync with `heightStr`.
 
-4. The last thing to bring back is the error messages. When the user types something "bad", we currently don't provide any useful feedback. Fill in the implementation of `displayError` so that the user once again is able to see what she did wrong. You can use our implementation of `clearError` as a loose reference.
+4. Computed properties are functions on your view's data that are kept up-to-date. They're called whenever the data changes, but otherwise cached. Create a new computed property called `error` that it returns the result of `checkForErrors(this.heightStr)`. Also, delete the `error` entry in `data:` and the update in `clearAndRedraw`.
 
-## Tips
+5. Fill out the other computed property, `rows`. It should return the result of calling `pyramidRows` on `this.height`. Use your new computed property towards the bottom of `clearAndRedraw`.
 
-- This [jQuery vs Vanilla JS Cheatsheet][cheatsheet] is useful (doesn't cover everything though).
+6. Now we get to the good stuff! We're going to get to remove that ugly direct DOM manipulation code (almost all of `clearAndRedraw`). Instead, we'll use a nice declarative template. Inside the `#pyramid` div in the template, add the following:
 
-- You will probably need to use at least the following jQuery functions:
+```html
+<p v-for="row in rows" v-html="row" />
+```
 
-    - [.val()][val]
-    - [.append()][append]
-    - [.text()][text]
-    - [.addClass()][addClass]
-    - [.empty()][empty]
+This says "make a `<p>` for each entry in rows. Each p's `.innerHTML` should be set to the value of `row`.
 
+7. Delete all the DOM manipulation code from `clearAndRedraw`. It should just look like this:
+
+```js
+// Stop the form from causing a page refresh.
+evt.preventDefault();
+
+if (this.error) {
+    // Stop drawing, we've got errors.
+    return;
+}
+
+this.height = parseInt(this.heightStr);
+```
 
 ## Committing Your Changes
 
@@ -111,13 +127,7 @@ Now go ahead and complete the following tasks:
 2. Then commit, along with a descriptive message.
 
     ```nohighlight
-    $ git commit -m "refactor to use jQuery"
+    $ git commit -m "refactor to use Vue.js"
     ```
 
-
-[cheatsheet]: https://gist.github.com/liamcurry/2597326
-[append]: https://api.jquery.com/append/
-[val]: https://api.jquery.com/val/
-[addClass]: https://api.jquery.com/addClass
-[empty]: https://api.jquery.com/empty/
-[text]: https://api.jquery.com/text/
+[vue-js-docs]: https://vuejs.org/v2/guide/
