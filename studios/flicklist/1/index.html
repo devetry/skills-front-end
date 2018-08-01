@@ -230,12 +230,8 @@ Switched to a new branch 'studio1'</code></pre>
 <p>Once you have list items displaying the titles of all the movies, the next step is to add a button to each item. The button should say &quot;Add to watchlist&quot;.</p>
 <p>This step should be pretty simple. Just throw another element inside the list item, after the movie title.</p>
 <h5 id="5-create-a-handler-function-for-when-a-button-is-clicked">5. Create a handler function for when a button is clicked</h5>
-<p>Once those buttons are showing up, your next task is to make them actually do something. We'll put the instructions for what should happen when a button is clicked into the <code>methods</code> portion of your view. The function you'll write needs to take the name of a movie as its only argument and do two things:</p>
-<ol>
-<li>append the name of the movie that was clicked to <code>this.watchlistItems</code>.</li>
-<li>remove the movie from <code>this.browseItems</code>.</li>
-</ol>
-<p>Because Vue is &quot;reactive&quot;, it will notice these changes to the data, and update the document to look right.</p>
+<p>Once those buttons are showing up, your next task is to make them actually do something. We'll put the instructions for what should happen when a button is clicked into the <code>methods</code> portion of your view. The function you'll write needs to take the name of a movie as its only argument and append the name of the movie that was clicked to <code>this.watchlistItems</code>.</p>
+<p>Because Vue is &quot;reactive&quot;, it will notice this change to the data, and update the document to look right.</p>
 <h5 id="6-add-click-handlers-to-the-buttons">6. Add click handlers to the buttons</h5>
 <p>Use <code>v-on:click</code> or <code>@click</code> (they mean the same thing, one is just shorter) to bind our handler function to each button. Be sure to pass in the name of the movie. Take a look at <a href="https://vuejs.org/v2/guide/events.html#Methods-in-Inline-Handlers">Methods in Inline Handlers</a> if you get stuck.</p>
 <h5 id="7-insert-a-list-item-for-each-movie-on-the-watchlist">7. Insert a list item for each movie on the Watchlist</h5>
