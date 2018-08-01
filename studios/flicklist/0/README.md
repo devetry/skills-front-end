@@ -110,9 +110,9 @@ Here's how to nab that key:
 
 Visit the following url:
 
-https://www.themoviedb.org/account/bobthebuilder/request-api?type=developer
+https://www.themoviedb.org/settings/api/new?type=developer
 
-where "bobthebuilder" is your username for the account you just created. Click on the "I agree" button.
+Click on the "I agree" button.
 
 ### Register Your Project
 

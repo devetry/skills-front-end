@@ -32,12 +32,13 @@ In Javascript, you can make a request to a server, wait for the response to come
 
 Done | Task | Resource Type | Link | Time Estimate | Instructions
 -----|------|---------------|------|---------------|--------------
-<input type="checkbox" v-model="checks.p7d" /> | Do   | Interactive Course | [Udacity: Intro to AJAX][intro-to-ajax] | 6 hours | This course covers the basics of making AJAX requests. You will see how to build a project that reads data from third-party services like Google Maps and Wikipedia by making AJAX requests to those sites' publicly-facing APIs.
-
+<input type="checkbox" v-model="checks.p7d" /> | Do   | Article | [CSS Tricks: Using Fetch][css-tricks-using-fetch] | 20 minutes | This article explains how to use the built-in `fetch` function to bring data from other sources into your page. Feel free to stop once you get to the "Handling other response types" portion.
+<input type="checkbox" v-model="checks.p7e" /> | Do   | Documentation | [MDN: Using Fetch][mdn-using-fetch] | 20 minutes | Documentation for how to use `fetch`, with many examples.
 
 
 
 [curl-tutorial]: http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage/
 [3-minute-json]: http://www.secretgeek.net/json_3mins
 [what-is-json]: http://stackoverflow.com/questions/383692/what-is-json-and-why-would-i-use-it
-[intro-to-ajax]: https://www.udacity.com/course/intro-to-ajax--ud110
+[css-tricks-using-fetch]: https://css-tricks.com/using-fetch/#article-header-id-6
+[mdn-using-fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
