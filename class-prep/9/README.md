@@ -5,12 +5,6 @@ currentMenu: course-outline
 
 Before coming to Class 9, please complete the following tasks:
 
-### Studio Recap
-Done | Task | Resource Type | Link | Time Estimate | Instructions
------|------|---------------|------|---------------|-------------
-<input type="checkbox" v-model="checks.p9a" /> | Follow Along | Exercise | 30 minutes | [FlickList 1 Solution](https://github.com/LaunchCodeEducation/flicklist/tree/studio1-staff-solution) | Read over (and maybe even code along with) the staff solution to the previous Studio, so that you're up to speed with the starter code for the upcoming one.
-
-
 ### Semantic HTML
 
 These days it is considered best-practice to structure your HTML content by always trying to choose a tag that "semantically" describes its content. With HTML5 came a suite of new tags (`<section>`, `<header>`, etc) that are more semantically meaningful than plain-old `<div>`s.

@@ -135,12 +135,9 @@ This step should be pretty simple. Just throw another element inside the list it
 
 ##### 5. Create a handler function for when a button is clicked
 
-Once those buttons are showing up, your next task is to make them actually do something. We'll put the instructions for what should happen when a button is clicked into the `methods` portion of your view. The function you'll write needs to take the name of a movie as its only argument and do two things:
+Once those buttons are showing up, your next task is to make them actually do something. We'll put the instructions for what should happen when a button is clicked into the `methods` portion of your view. The function you'll write needs to take the name of a movie as its only argument and append the name of the movie that was clicked to `this.watchlistItems`.
 
-1. append the name of the movie that was clicked to `this.watchlistItems`.
-2. remove the movie from `this.browseItems`.
-
-Because Vue is "reactive", it will notice these changes to the data, and update the document to look right.
+Because Vue is "reactive", it will notice this change to the data, and update the document to look right.
 
 ##### 6. Add click handlers to the buttons
 
