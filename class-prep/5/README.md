@@ -15,7 +15,7 @@ A Catchup is a special type of Javascript function that takes no arguments, and 
 
 Just kidding. Take a moment to spend time with the following:
 
-- The [Pyramid Slide](../materials/assignments/pyramid-slide) assignment
+- The [Pyramid Slide](../../assignments/pyramid-slide) assignment
 - Previous Mario studios
 - Go back and re-read some Eloquent Javascript chapters (I suspect on the second read you will find more things [clicking into place][gif-epiphany].)
 
