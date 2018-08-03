@@ -221,7 +221,7 @@
 <h2 id="obtaining-the-starter-code">Obtaining the Starter Code</h2>
 <ol>
 <li>
-<p>Visit our <a href="https://github.com/LaunchCodeEducation/the-ajaxson-5">starter-code repository</a> on Github.</p>
+<p>Visit our <a href="https://github.com/bgschiller/the-ajaxson-5">starter-code repository</a> on Github.</p>
 </li>
 <li>
 <p><strong>Fork</strong> our repo by pressing the &quot;Fork&quot; button. You will now have your own version of the project, hosted on your Github profile.</p>
@@ -247,46 +247,36 @@ index.html request-gif.js</code></pre>
 <li>a <code>&lt;form&gt;</code> where the user can type a search query and request a new GIF</li>
 <li>an <code>&lt;img&gt;</code> where the GIF will be displayed</li>
 <li>a <code>&lt;p&gt;</code> that we can use to report feedback about the image loading or an error having occurred.</li>
-<li>a couple <code>&lt;script&gt;</code> tags to load jQuery and our own <code>request-gif.js</code> script.</li>
+<li>a couple <code>&lt;script&gt;</code> tags to load Vue.js and our own <code>request-gif.js</code> script.</li>
 </ul>
-<h4 id="request-gifjs">request-gif.js</h4>
-<p>You will do all your work inside <code>request-gif.js</code>. Open it up now and take a look.</p>
-<p>In broad terms, this script's job is to set things up such that:</p>
-<ul>
-<li>when the <code>&lt;form&gt;</code> is submitted, an AJAX request will be sent out to Giphy asking for a new random GIF</li>
-<li>when a response comes back from Giphy, the new GIF will be displayed</li>
-</ul>
-<p>The first block of code in the file contains this line:</p>
-<pre><code class="language-js">$("#form-gif-request").submit(fetchAndDisplayGif);</code></pre>
-<p>which uses jQuery to search the DOM for our form (by querying for an element whose <code>id</code> is <code>"form-gif-request"</code>), and then attaches, to that form's <code>submit</code> event, a &quot;callback&quot; function named <code>fetchAndDisplayGif</code>, which we have defined elsewhere in the file. The result is that whenever the form is submitted, our <code>fetchAndDisplayGif</code> function will be invoked.</p>
-<p>The above line is, itself, inside of another callback, an anonymous function that we pass to jQuery's <code>document.ready()</code> function. This ensures that we do not execute that line until the HTML document has finished loading and is &quot;ready&quot; (because if we don't wait, then this code might execute before the <code>&lt;form&gt;</code> has loaded, in which case our <code>$("#form-gif-request")</code> query will fail to find anything).</p>
-<p>Let's continue on to the <code>fetchAndDisplayGif()</code> function. This is where you will do all your work. You will see a handful of TODOs sprinkled throughout the body of this function. The code that is in there currently provides a skeleton for the following game plan:</p>
+<p>Changes you'll need to make in <code>index.html</code>:</p>
 <ol>
-<li>query the DOM to figure out what the user typed</li>
-<li>make an AJAX request</li>
-<li>when the request comes back, modify the DOM so that the new GIF is shown.</li>
+<li>You'll add a loading indicator for when we're waiting for Giphy to hand us back a GIF.</li>
+<li>Change the tag input so that it's kept in sync with your Vue's data.</li>
 </ol>
-<p>To make the AJAX request, we use jQuery's <code>ajax()</code> function. In some of the CS50 examples so far, you might have seen David Malan and co. using a similar jQuery function called <code>getJson()</code>. Both functions do the exact same thing. The only difference is that <code>ajax()</code> lets you customize a little more (with the downside of being a little more complicated). But it's actually not so bad. The gist is that we are calling the <code>ajax()</code> function and passing it a big object to specify all the settings we want to configure:</p>
-<ul>
-<li><code>url</code> -- the url that we want to talk to</li>
-<li><code>data</code> -- any extra data that we want to send along with our request (in our case, the api_key and tag)</li>
-<li><code>success</code> -- a callback function to execute when the response comes back</li>
-<li><code>error</code> -- an alternative callback function, if something went wrong, to handle the error</li>
-</ul>
-<p>There are many more settings you can configure, but those are the core things we care about in this case.</p>
-<p>The last section of this function is a TODO where we instruct you to give the user a &quot;Loading...&quot; message while they wait for the response to come back. You might be wondering: Why are we displaying a loading message AFTER we've already done the whole request and handled the response in the <code>success()</code> (or <code>error()</code>) function? Remember, those callback functions will not actually be <em>executed</em> until later, after the response comes back. Just because the <code>success()</code> function is defined <em>above</em> line 53 does not mean that it will actually be invoked before line 53.</p>
-<p>The final piece of code in the file is a helper function called <code>setGifLoadedStatus()</code> which we have written, which you can use to toggle the visibility of the <code>&lt;img&gt;</code> and <code>&lt;p&gt;</code> tags in the HTML page. Depending on the situation, you are either going to want one to be visible and the other hidden, or vice versa, so this function makes it easy to flip back and forth between those two possible states.</p>
+<h4 id="request-gifjs">request-gif.js</h4>
+<p>This file defines a new Vue with a few data properties (<code>tagValue</code>, <code>errorMessage</code>, <code>loading</code>, and <code>imgSrc</code>), and a single large method: <code>fetchGif</code>. You'll also notice the line that says <code>el: '#mount-point'</code>. That tells Vue to look to the html element with an id of <code>mount-point</code> in order to know how to render.</p>
+<p>Let's take a look in the <code>fetchGif</code> function. This is where you'll do all of your work in this file.  You'll see a handful of TODOs sprinkled throughout the body of this function. The code that's in there currently provides a skeleton for the following game plan:</p>
+<ol>
+<li>Check the Vue's data to figure out what the user typed</li>
+<li>make an AJAX request</li>
+<li>when the request comes back, save the <code>image_url</code>. This causes Vue to re-render the DOM, showing the GIF.</li>
+</ol>
+<p>To make the AJAX request, we use the built-in <code>fetch()</code> function. Take a look at the way we're calling fetch. We're passing in a <a href="https://wesbos.com/javascript-template-strings/">template string</a>, using backticks. It has the params already filled out, but the URL is wrong. It's currently <code>http://example.com</code>.</p>
+<p>There are many more settings you can configure using fetch but, for now, the URL is all we need.</p>
+<p>The fetch function makes an HTTP request, and produces something called a <code>Promise</code>. Promises in javascript are all over the place. They're a way of saying &quot;This action isn't done yet but when it is, here's what I'd like to do next.&quot; That's the <code>.then(callback)</code> portion. It's also possible to say &quot;Here's what we should do if something goes wrong&quot;. That's the <code>.catch(callback)</code> portion. We'll talk more about promises in class.</p>
+<p>As it happens, we have some things we'd like to do once the action is done. Specifically, we'd like to update our <code>imgSrc</code> property with the new data, and set <code>loading</code> to be false. You'll see a couple TODO comments for those items.</p>
+<p>The last section of this function is a TODO where we instruct you to give the user a &quot;Loading...&quot; message while they wait for the response to come back. You might be wondering: Why are we displaying a loading message AFTER we've already done the whole request and handled the response in the <code>then(...)</code> (or <code>catch(...)</code>) function? Remember, those callback functions will not actually be <em>executed</em> until later, after the response comes back. Just because the <code>then(...)</code> function is defined <em>above</em> line 41 does not mean that it will actually be invoked before line 41.</p>
 <h2 id="your-task">Your Task</h2>
 <p>The assignment has 3 parts:</p>
 <h4 id="part-1-core-functionality">Part 1: Core Functionality</h4>
 <p>This part is easy to explain: go ahead and fill in those <code>TODO</code> comments!</p>
 <p>You know you are done when your site performs all the functionality described in the <a href="./#the-goal">The Goal</a> section above.</p>
-<p>You may find the following jQuery functions helpful:</p>
+<p>You may find the following Vue Documentation pages helpful:</p>
 <ul>
-<li><code>$(someSelector).attr()</code></li>
-<li><code>$(someSelector).html()</code></li>
-<li><code>$(someSelector).val()</code></li>
-<li><code>$(someSelector).find()</code></li>
+<li><a href="https://vuejs.org/v2/guide/#Declarative-Rendering">Declarative Rendering</a></li>
+<li><a href="https://vuejs.org/v2/guide/#Conditionals-and-Loops">Conditionals and Loops</a></li>
+<li><a href="https://vuejs.org/v2/guide/#Handling-User-Input">Handling User Input</a></li>
 </ul>
 <h4 id="part-2-validation">Part 2: Validation</h4>
 <p>Next, it is time to add some validation to the page. We are going to create a contrived scenario here, just to make you practice your skillz.</p>
@@ -305,7 +295,7 @@ index.html request-gif.js</code></pre>
 <img src="./screenshots/pretty-page-3.png" alt="pretty-page-3" /></p>
 <p>But feel free to get creative and style the page however you want.</p>
 <p>The one requirement is that your page <strong>must be reasonably responsive!</strong>. Specifically, this means that it must be equally functional and non-ugly on mobile phones as it is on larger desktop screens. You should make your browser window really narrow while you design, so as to force yourself to think &quot;mobile first&quot;.</p>
-<p>You are encouraged (but not required) to let <a href="http://getbootstrap.com/css/">Bootstrap</a> do most of the heavy lifting, particularly on the responsiveness aspect.</p>
+<p>You are free to use <a href="http://getbootstrap.com/css/">Bootstrap</a> or any other CSS framework to help in this. I also recommend flexbox for making your page responsive.</p>
 <h2 id="how-to-submit">How to Submit</h2>
 <ol>
 <li>Follow the <a href="..">submission instructions</a></li>
