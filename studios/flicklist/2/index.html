@@ -152,7 +152,7 @@
                 <section id="content" class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
                                         <h1>FlickList 2</h1>
                     <p>Today we will add a hodge-podge of miscellaneous new features to our movie site. We'll include some CSS to apply styles to the page, and build on our interaction with the API.</p>
-<p>Along the way, hopefully you will continue to get more comfortable with jQuery, CSS, AJAX, making API calls, and working with HTML forms.</p>
+<p>Along the way, hopefully you will continue to get more comfortable with Vue, CSS, AJAX, making API calls, and working with HTML forms.</p>
 <h2 id="demo">Demo</h2>
 <p>Here is a demo of what you are trying to accomplish: <a href="http://htmlpreview.github.io/?https://github.com/LaunchCodeEducation/flicklist/blob/f3dae711763c73f56267ac35e076c56383183829/index.html">FlickList 2 Demo</a>. Play around with the demo for a minute and get familiar with its features. You also might want to keep the demo open in a separate window, so you can refer to it while working on the assignment.</p>
 <p>Note the following additions since last time:</p>
@@ -187,28 +187,17 @@ Switched to a new branch 'studio2'</code></pre>
 <p>The HTML file has only changed slightly since we last left it:</p>
 <ul>
 <li>In the <code>&lt;head&gt;</code> there is now a link to our stylesheet.</li>
-<li>In the browse section, we have a TODO, asking you to create a <code>&lt;form&gt;</code> for the user to search for movies</li>
-<li>At the bottom, we have a <code>&lt;script&gt;</code> tag inside of which is some partially completed JS code with some more TODOs. This is where you will specify what the form should do when the user clicks the submit button.</li>
+<li>There is a TODO asking you to add a class to watchlist items</li>
+<li>A TODO for adding the search form, with both a text input and a submit button</li>
+<li>A TODO instructing you to set the &quot;Add to Watchlist&quot; button to &quot;disabled&quot; if the movie has already been added</li>
+<li>And a TODO asking you to display the movie object's overview</li>
 </ul>
 <h3 id="flicklistjs">flicklist.js</h3>
 <p>Our javascript file is also pretty similar to last time, with just a few changes:</p>
 <ul>
 <li>There is a new function, <code>searchMovies</code>, which will be invoked as part of the submit handler on the form (see above). The body of this function is pretty empty (so far!).</li>
-<li>The <code>render</code> function has a few TODOs for you.</li>
+<li>The <code>data</code> portion of your Vue will need a small change: a place to store the searchTerm your users will make in the new form.</li>
 </ul>
-<p>Also notice inside <code>render</code> that we have re-written some of the jQuery code in a style that might seem a little funny. For example, this line:</p>
-<pre><code class="language-js">var button = $("&lt;button&gt;&lt;/button&gt;")
-   .text("Add to Watchlist")
-   .click(function() {
-     model.watchlistItems.push(movie);
-     render();
-   });</code></pre>
-<p>or this one:</p>
-<pre><code class="language-js">var itemView = $("&lt;li&gt;&lt;/li&gt;")
-   .append($("&lt;hr/&gt;"))
-   .append(title)
-   .append(button);</code></pre>
-<p>This is a common style for lines of code in which you are chaining together a bunch of jQuery method calls one after the other. When these chains become long enough, there comes a point where they will annoyingly run off the right edge of the screen. To mitigate that, the convention is to place each subsequennt method call on its own new line, indented once.</p>
 <h3 id="stylescss">styles.css</h3>
 <p>Finally, open up the new stylesheet. As you can see, we've already gotten started applying some styles to the page.</p>
 <p>As a quick exercise, go preview the page in your browser right now, and open up Dev Tools. In the Elements tab, notice that one of the things you can inspect is the styles of your elements. You can even change the styles and see the results immediately! Spend a minute playing and tinkering with the styles we have added.</p>
@@ -217,24 +206,25 @@ Switched to a new branch 'studio2'</code></pre>
 <h3 id="0-api-key">0. API key</h3>
 <p>As usual, add your api key to the object near the top of <code>flicklist.js</code>.</p>
 <h3 id="1-add-a-description-paragraph-to-each-browselist-item">1. Add a Description Paragraph to Each Browselist Item</h3>
-<p>On the browse list, let's spice up those list items by displaying some more data about the movies. Using jQuery, create a <code>&lt;p&gt;</code> with a description of the movie's plot. You can find this description as a string somewhere inside the movie object. Just as the title is accessbile via the property <code>movie.original_title</code>, the description is a different property. What's the name of the property? You'll have to use a <code>console.log</code> statement to poke around and find out. (It's not <code>movie.description</code>). Once you have created the paragraph, append it to <code>itemView</code> below the title and above the &quot;Add to Watchlist&quot; button.</p>
+<p>On the browse list, let's spice up those list items by displaying some more data about the movies. In the html file, create a <code>&lt;p&gt;</code> containing a description of the movie's plot. You can find this description as a string somewhere inside the movie object. Just as the title is accessbile via the property <code>movie.original_title</code>, the description is a different property. What's the name of the property? You'll have to use a <code>console.log</code> statement to poke around and find out. (It's not <code>movie.description</code>).</p>
 <h3 id="2-disable-buttons">2. Disable Buttons</h3>
 <p>Next, implement this feature: an &quot;Add to Watchlist&quot; button should be disabled if the movie in question is already present in the user's watchlist.</p>
-<p>To determine whether the movie is already present, you can use the javascript array function <code>indexOf</code>, which returns the index of a thing in an array, unless the thing is not found, in which case <code>-1</code> is returned. For example:</p>
+<p>To determine whether the movie is already present, you can use the javascript array function <code>includes</code>, which returns <code>true</code>/<code>false</code> depending on whether a thing is in an array. For example:</p>
 <pre><code class="language-js">var nums = [0, 7, 5, 2];
-nums.indexOf(5) // returns 2
-nums.indexOf(5000) // returns -1</code></pre>
-<p>To disable the button, you can use jQuery's <code>prop</code> function, e.g.</p>
-<pre><code class="language-js">var nuclearReactor = $("#nuclear-reactor");
-nuclearReactor.prop("disabled", true);</code></pre>
+nums.includes(5) // returns true
+nums.includes(5000) // returns false</code></pre>
+<p>To disable the button, you can use Vue's <code>v-bind</code> directive. For the example below, imagine <code>textIsAllowed</code> is part of the view's data.</p>
+<pre><code class="language-html">&lt;input type="text" v-bind:disabled="textIsAllowed" /&gt;
+&lt;!-- Or, equivalently, using Vue's shorthand for v-bind: --&gt;
+&lt;input type="text" :disabled="textIsAllowed" /&gt;</code></pre>
 <p>Once you have this working, take a quick note of the CSS rule we used in order to achieve the visual effect. We lower the <code>opacity</code> property (in other words, transparency) of disabled buttons. In order to select for only disabled buttons, we used the <code>:disabled</code> <a href="http://www.w3schools.com/css/css_pseudo_classes.asp">pseudoclass</a>.</p>
 <h3 id="3-give-watchlist-items-a-class-attribute">3. Give Watchlist Items a Class Attribute</h3>
-<p>Next, it's time to apply some styles to those watchlist <code>&lt;li&gt;</code>s, so that they are big orange bricks. But first, in order to do that, we'll need to give them a <code>class</code> attribute, so that our CSS can select them. Inside the <code>render</code> function, within the <code>forEach</code> iteration over <code>model.watchlistItems</code>, use the jQuery <code>attr</code> function to give the <code>itemView</code> variable a class of <code>"item-watchlist"</code>.</p>
+<p>Next, it's time to apply some styles to those watchlist <code>&lt;li&gt;</code>s, so that they are big orange bricks. But first, in order to do that, we'll need to give them a <code>class</code> attribute, so that our CSS can select them. Inside the HTML function, within the <code>v-for</code> iteration over <code>watchlistItems</code>, give each <code>&lt;p&gt;</code> tag a class of <code>"item-watchlist"</code>.</p>
 <p>Verify that you succeeded as follows: In your browser window, add some movies to the watchlist. Then, open up the dev tools, go to the Console tab, and type this:</p>
-<pre><code class="language-js">$(".item-watchlist")</code></pre>
+<pre><code class="language-js">document.querySelectorAll(".item-watchlist")</code></pre>
 <p>followed by the Enter key. You should see an array with some <code>&lt;li&gt;</code>s inside it, one for each watchlist item! You should not see an empty array, i.e. <code>[]</code>.</p>
 <h3 id="4-style-the-watchlist-items-as-orange-bricks">4. Style the Watchlist Items as Orange Bricks</h3>
-<p>Now that your watchlist items have a class attribute, you can apply styles to them. Open up <code>styles.css</code>, and create a new class selector for elements with the class &quot;item-watchlist&quot; (hint: CSS selectors are the same as jQuery selectors). Add some styles until your watchlist items resemble those orange bricks from the demo. One style you'll definitely want to apply is:</p>
+<p>Now that your watchlist items have a class attribute, you can apply styles to them. Open up <code>styles.css</code>, and create a new class selector for elements with the class &quot;item-watchlist&quot;. Add some styles until your watchlist items resemble those orange bricks from the demo. One style you'll definitely want to apply is:</p>
 <pre><code class="language-nohighlight">display: inline-block;</code></pre>
 <p>This is what enables that left-to-right flow pattern. (See this <a href="http://stackoverflow.com/questions/8969381/what-is-the-difference-between-display-inline-and-display-inline-block">Stack Overflow post</a> for a nice overview of the differences between <code>block</code>, <code>inline</code>, and <code>inline-block</code>).</p>
 <p>You'll also need to apply a few other styles: a lot of padding, a little bit of margin on <a href="http://stackoverflow.com/questions/356759/a-mnemonic-for-the-order-of-css-margin-and-padding-shorthand-properties">just the right and bottom edges</a>, and the colors obviously need to change.</p>
@@ -242,19 +232,19 @@ nuclearReactor.prop("disabled", true);</code></pre>
 <p>Next, create a css rule that will set a baseline default of gray for the color of all text in the body of the document. To accomplish this, you only have to make one rule! you don't have to go and start adding declarations to each and every selector in the CSS file. You simply have to apply the style to some common container, and then all descendants of the container will automatically inherit the same style.</p>
 <h3 id="6-add-a-form-to-the-page">6. Add a Form to the Page</h3>
 <p>The last new feature we need to add is a <code>&lt;form&gt;</code>, with a text field and a submit button, via which users can search for particular movies.</p>
-<p>The first step to implementing this feature is simply to add the form to <code>index.html</code>. Go ahead and do that now. Your form does not need any of the usual attributes, like <code>action</code> or <code>method</code>, because we are going to intercept and cancel its submit event anyway. The one attribute you should give the form is an <code>id</code> equal to <code>"form-search"</code>. Inside the form, you should have two <code>&lt;input&gt;</code>s: one, a text field, and the other, a submit button.</p>
+<p>The first step to implementing this feature is simply to add the form to <code>index.html</code>. Go ahead and do that now. Your form does not need any of the usual attributes, like <code>action</code> or <code>method</code>, because we are going to intercept and cancel its submit event anyway. Inside the form, you should have two <code>&lt;input&gt;</code>s: one, a text field, and the other, a submit button.</p>
 <h3 id="7-style-the-buttons">7. Style the Buttons</h3>
 <p>Very briefly, let's jump back over to <code>styles.css</code> and apply some styles to the buttons, both the &quot;Add to Watchlist&quot; buttons and the &quot;Search by Title&quot; submit button on the form</p>
 <p>Notice how the selector here includes <code>input[type=submit]</code> in order to select for both normal buttons and submit buttons on forms.</p>
-<h3 id="8-add-a-submit-handler-to-the-form">8. Add a Submit Handler to the Form</h3>
-<p>Once your form is present on the page, the next step is to give it a submit handler. We want to specify that when the user presses the submit button, the <code>searchMovies</code> function (which you will implement next) gets invoked, using the search term that the user typed in, with <code>render</code> as the callback to be executed after receiving a response from the api.</p>
-<p>As you can see, we use jQuery's <code>.submit</code> function, which is very similar to <code>.click</code> in that it allows you to pass in a function to be executed whenever a form is submitted. You must:</p>
+<h3 id="8-add-a-click-handler-to-the-form-submit">8. Add a Click Handler to the Form Submit</h3>
+<p>Once your form is present on the page, the next step is to give it a click handler. We want to specify that when the user presses the submit button, the <code>searchMovies</code> function (which you will implement next) gets invoked, using the search term that the user typed in.</p>
+<p>We will use Vue's <code>@click</code> directive, which allows you to pass in some code to be executed whenever a form is submitted. You must:</p>
 <ul>
-<li>A: fill in the jQuery selector so that we are calling <code>.submit</code> on our form</li>
-<li>B: within the submit handler function, fill in another jQuery selector to figure out what the user typed into the search bar. For this task you must use a selector very similar to the example in <code>styles.css</code> for the submit button (<code>input[type=submit]</code>).</li>
-<li>C: also within the body of the submit handler function, invoke the <code>searchMovies</code> function and pass in the arguments it needs.</li>
+<li>A: Add the <code>@click</code> directive, including the <code>.prevent</code> modifier, and use the <code>searchMovies</code> function as the handler.</li>
+<li>B: Set a <code>v-model</code> directive on your text input, so that its value will be kept in sync with data on the view. You'll need to choose a name for the data collected from that input, and add it to the <code>data</code> portion of your Vue.</li>
+<li>C: In the value of your <code>@click</code> handler, add an argument for the search term.</li>
 </ul>
-<p>If you've done everything correctly you should be able to see some output on the console. Search for &quot;cocounut&quot; and you should see a log statement that reads: &quot;searching for movies with 'coconut' in their title...&quot;.</p>
+<p>If you've done everything correctly you should be able to see some output on the console. Search for &quot;coconut&quot; and you should see a log statement that reads: &quot;searching for movies with 'coconut' in their title...&quot;.</p>
 <h3 id="9-implement-the">9. Implement the <code>searchMovies</code> Function</h3>
 <p>Finally, let's implement this function in <code>flicklist.js</code>. As a starting point, you can follow in the footsteps of the <code>discoverMovies</code> function. But a few things must be different:</p>
 <ul>
