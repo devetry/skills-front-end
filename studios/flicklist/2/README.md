@@ -5,7 +5,7 @@ currentMenu: studios
 
 Today we will add a hodge-podge of miscellaneous new features to our movie site. We'll include some CSS to apply styles to the page, and build on our interaction with the API.
 
-Along the way, hopefully you will continue to get more comfortable with jQuery, CSS, AJAX, making API calls, and working with HTML forms.
+Along the way, hopefully you will continue to get more comfortable with Vue, CSS, AJAX, making API calls, and working with HTML forms.
 
 ## Demo
 
@@ -61,36 +61,16 @@ Let's look briefly at each of our files:
 
 The HTML file has only changed slightly since we last left it:
 * In the `<head>` there is now a link to our stylesheet.
-* In the browse section, we have a TODO, asking you to create a `<form>` for the user to search for movies
-* At the bottom, we have a `<script>` tag inside of which is some partially completed JS code with some more TODOs. This is where you will specify what the form should do when the user clicks the submit button.
+* There is a TODO asking you to add a class to watchlist items
+* A TODO for adding the search form, with both a text input and a submit button
+* A TODO instructing you to set the "Add to Watchlist" button to "disabled" if the movie has already been added
+* And a TODO asking you to display the movie object's overview
 
 ### flicklist.js
 
 Our javascript file is also pretty similar to last time, with just a few changes:
 * There is a new function, `searchMovies`, which will be invoked as part of the submit handler on the form (see above). The body of this function is pretty empty (so far!).
-* The `render` function has a few TODOs for you.
-
-Also notice inside `render` that we have re-written some of the jQuery code in a style that might seem a little funny. For example, this line:
-
-```js
-var button = $("<button></button>")
-   .text("Add to Watchlist")
-   .click(function() {
-     model.watchlistItems.push(movie);
-     render();
-   });
-```
-
-or this one:
-
-```js
-var itemView = $("<li></li>")
-   .append($("<hr/>"))
-   .append(title)
-   .append(button);
-```
-
-This is a common style for lines of code in which you are chaining together a bunch of jQuery method calls one after the other. When these chains become long enough, there comes a point where they will annoyingly run off the right edge of the screen. To mitigate that, the convention is to place each subsequennt method call on its own new line, indented once.
+* The `data` portion of your Vue will need a small change: a place to store the searchTerm your users will make in the new form.
 
 ### styles.css
 
@@ -108,24 +88,25 @@ As usual, add your api key to the object near the top of `flicklist.js`.
 
 ### 1. Add a Description Paragraph to Each Browselist Item
 
-On the browse list, let's spice up those list items by displaying some more data about the movies. Using jQuery, create a `<p>` with a description of the movie's plot. You can find this description as a string somewhere inside the movie object. Just as the title is accessbile via the property `movie.original_title`, the description is a different property. What's the name of the property? You'll have to use a `console.log` statement to poke around and find out. (It's not `movie.description`). Once you have created the paragraph, append it to `itemView` below the title and above the "Add to Watchlist" button.
+On the browse list, let's spice up those list items by displaying some more data about the movies. In the html file, create a `<p>` containing a description of the movie's plot. You can find this description as a string somewhere inside the movie object. Just as the title is accessbile via the property `movie.original_title`, the description is a different property. What's the name of the property? You'll have to use a `console.log` statement to poke around and find out. (It's not `movie.description`).
 
 ### 2. Disable Buttons
 
 Next, implement this feature: an "Add to Watchlist" button should be disabled if the movie in question is already present in the user's watchlist.
 
-To determine whether the movie is already present, you can use the javascript array function `indexOf`, which returns the index of a thing in an array, unless the thing is not found, in which case `-1` is returned. For example:
+To determine whether the movie is already present, you can use the javascript array function `includes`, which returns `true`/`false` depending on whether a thing is in an array. For example:
 
 ```js
 var nums = [0, 7, 5, 2];
-nums.indexOf(5) // returns 2
-nums.indexOf(5000) // returns -1
+nums.includes(5) // returns true
+nums.includes(5000) // returns false
 ```
 
-To disable the button, you can use jQuery's `prop` function, e.g.
-```js
-var nuclearReactor = $("#nuclear-reactor");
-nuclearReactor.prop("disabled", true);
+To disable the button, you can use Vue's `v-bind` directive. For the example below, imagine `textIsAllowed` is part of the view's data.
+```html
+<input type="text" v-bind:disabled="textIsAllowed" />
+<!-- Or, equivalently, using Vue's shorthand for v-bind: -->
+<input type="text" :disabled="textIsAllowed" />
 ```
 
 Once you have this working, take a quick note of the CSS rule we used in order to achieve the visual effect. We lower the `opacity` property (in other words, transparency) of disabled buttons. In order to select for only disabled buttons, we used the `:disabled` [pseudoclass][pseudoclass].
@@ -134,19 +115,19 @@ Once you have this working, take a quick note of the CSS rule we used in order t
 
 ### 3. Give Watchlist Items a Class Attribute
 
-Next, it's time to apply some styles to those watchlist `<li>`s, so that they are big orange bricks. But first, in order to do that, we'll need to give them a `class` attribute, so that our CSS can select them. Inside the `render` function, within the `forEach` iteration over `model.watchlistItems`, use the jQuery `attr` function to give the `itemView` variable a class of `"item-watchlist"`.
+Next, it's time to apply some styles to those watchlist `<li>`s, so that they are big orange bricks. But first, in order to do that, we'll need to give them a `class` attribute, so that our CSS can select them. Inside the HTML function, within the `v-for` iteration over `watchlistItems`, give each `<p>` tag a class of `"item-watchlist"`.
 
 Verify that you succeeded as follows: In your browser window, add some movies to the watchlist. Then, open up the dev tools, go to the Console tab, and type this:
 
 ```js
-$(".item-watchlist")
+document.querySelectorAll(".item-watchlist")
 ```
 
 followed by the Enter key. You should see an array with some `<li>`s inside it, one for each watchlist item! You should not see an empty array, i.e. `[]`.
 
 ### 4. Style the Watchlist Items as Orange Bricks
 
-Now that your watchlist items have a class attribute, you can apply styles to them. Open up `styles.css`, and create a new class selector for elements with the class "item-watchlist" (hint: CSS selectors are the same as jQuery selectors). Add some styles until your watchlist items resemble those orange bricks from the demo. One style you'll definitely want to apply is:
+Now that your watchlist items have a class attribute, you can apply styles to them. Open up `styles.css`, and create a new class selector for elements with the class "item-watchlist". Add some styles until your watchlist items resemble those orange bricks from the demo. One style you'll definitely want to apply is:
 
 ```nohighlight
 display: inline-block;
@@ -168,7 +149,7 @@ Next, create a css rule that will set a baseline default of gray for the color o
 
 The last new feature we need to add is a `<form>`, with a text field and a submit button, via which users can search for particular movies.
 
-The first step to implementing this feature is simply to add the form to `index.html`. Go ahead and do that now. Your form does not need any of the usual attributes, like `action` or `method`, because we are going to intercept and cancel its submit event anyway. The one attribute you should give the form is an `id` equal to `"form-search"`. Inside the form, you should have two `<input>`s: one, a text field, and the other, a submit button.
+The first step to implementing this feature is simply to add the form to `index.html`. Go ahead and do that now. Your form does not need any of the usual attributes, like `action` or `method`, because we are going to intercept and cancel its submit event anyway. Inside the form, you should have two `<input>`s: one, a text field, and the other, a submit button.
 
 ### 7. Style the Buttons
 
@@ -176,16 +157,16 @@ Very briefly, let's jump back over to `styles.css` and apply some styles to the 
 
 Notice how the selector here includes `input[type=submit]` in order to select for both normal buttons and submit buttons on forms.
 
-### 8. Add a Submit Handler to the Form
+### 8. Add a Click Handler to the Form Submit
 
-Once your form is present on the page, the next step is to give it a submit handler. We want to specify that when the user presses the submit button, the `searchMovies` function (which you will implement next) gets invoked, using the search term that the user typed in, with `render` as the callback to be executed after receiving a response from the api.
+Once your form is present on the page, the next step is to give it a click handler. We want to specify that when the user presses the submit button, the `searchMovies` function (which you will implement next) gets invoked, using the search term that the user typed in.
 
-As you can see, we use jQuery's `.submit` function, which is very similar to `.click` in that it allows you to pass in a function to be executed whenever a form is submitted. You must:
-* A: fill in the jQuery selector so that we are calling `.submit` on our form
-* B: within the submit handler function, fill in another jQuery selector to figure out what the user typed into the search bar. For this task you must use a selector very similar to the example in `styles.css` for the submit button (`input[type=submit]`).
-* C: also within the body of the submit handler function, invoke the `searchMovies` function and pass in the arguments it needs.
+We will use Vue's `@click` directive, which allows you to pass in some code to be executed whenever a form is submitted. You must:
+* A: Add the `@click` directive, including the `.prevent` modifier, and use the `searchMovies` function as the handler.
+* B: Set a `v-model` directive on your text input, so that its value will be kept in sync with data on the view. You'll need to choose a name for the data collected from that input, and add it to the `data` portion of your Vue.
+* C: In the value of your `@click` handler, add an argument for the search term.
 
-If you've done everything correctly you should be able to see some output on the console. Search for "cocounut" and you should see a log statement that reads: "searching for movies with 'coconut' in their title...".
+If you've done everything correctly you should be able to see some output on the console. Search for "coconut" and you should see a log statement that reads: "searching for movies with 'coconut' in their title...".
 
 ### 9. Implement the `searchMovies` Function
 
