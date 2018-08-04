@@ -31,37 +31,23 @@ Let's look briefly at what has changed in each of our files:
 
 ### index.html
 
-In `index.html`, the only important change is that we have wrapped our two `<section>`s together inside a `<div>` tag with a class of "main-content". We have also removed the "big-header" id from the `<header>` at the top of our page. Since we'll be using Bootstrap to style this header, we no longer need to give it an id.
+In `index.html`, the only important change (besides the TODO comments) is that we have wrapped our two `<section>`s together inside a `<div>` tag with a class of "main-content". We have also removed the "big-header" id from the `<header>` at the top of our page. Since we'll be using Bootstrap to style this header, we no longer need to give it an id.
 
 ### flicklist.js
 
-The only change in `flicklist.js` is that the `api` object at the top of the file now has an extra property:
+The only change in `flicklist.js` is that the `methods` object inside your view now has a new member:
 
 ```js
-var api = {
-  root: "https://api.themoviedb.org/3",
-  token: "TODO", // TODO 0 add your api key
-
-  /**
-   * Given a movie object, returns the url to its poster image
-   */
+methods: {
+  // ...
   posterUrl: function(movie) {
     // TODO 4b
     // implement this function
 
     return "http://images5.fanpop.com/image/photos/25100000/movie-poster-rapunzel-and-eugene-25184488-300-450.jpg"
-  }
+  },
+  // ...
 }
-```
-
-The object now has three properties: `api.root`, `api.token`, and `api.posterUrl`. But `posterUrl` is a tad special, because rather than a simple primitive type like a string or int, `api.posterUrl` is a function!
-
-You can call this function like you would call any other:
-
-```js
-var myMovie = {}; // pretend we have some movie object lying around
-var url = api.posterUrl(myMovie);
-console.log(url); // => logs http://images5.fanpop.com/image/photos/25100000/movie-poster-rapunzel-and-eugene-25184488-300-450.jpg
 ```
 
 One of your tasks will be to implement this function so that it returns, for a given movie, the url to a jpg somewhere on the internet where that movie's poster image lives.
