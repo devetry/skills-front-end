@@ -86,9 +86,9 @@ As usual, add your api key to the object near the top of `flicklist.js`.
 
 ### 1. An "I watched it" Button
 
-In flicklist.js, inside the `render` function, add a button to each Watchlist item. When clicked, the appropriate movie should be removed from `model.watchlistItems`, and `render` should be called again.
+In index.html, add a button to each Watchlist item. When clicked, the appropriate movie should be removed from `watchlistItems`.
 
-To remove the item from the array, you can use a new array function called <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">splice</a>. You'll also need to use `indexOf` again (you should be familiar with this function from the previous studio), in order to determine where to splice from the array.
+To remove the item from the array, I recommend using the Array method <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>.
 
 ### 2. Bootstrap Makeover Party
 
@@ -123,7 +123,7 @@ Finally, note that this customization only works because in the head of `index.h
 
 #### 2d. Style the Browse List
 
-This task involves changing code in both `index.html` and `flicklist.js`.
+This task involves changing code in `index.html`.
 
 Read more about [Bootstrap Lists](http://v4-alpha.getbootstrap.com/components/list-group/) and [Bootstrap Buttons](http://v4-alpha.getbootstrap.com/components/buttons/) for guidance.
 
@@ -137,7 +137,7 @@ This one's very simple. In index.html, just give the watchlist `<ul>` a class of
 
 #### 2g. Style the Watchlist Items
 
-In `flicklist.js`, restyle the watchlist items using [Bootstrap Panels](http://getbootstrap.com/components/#panels-heading).
+In the watchlist section of `index.html`, restyle the watchlist items using [Bootstrap Panels](http://getbootstrap.com/components/#panels-heading).
 
 #### 2h. Customize the Watchlist Items
 
@@ -152,15 +152,15 @@ Make 'em red. Here is the section on [Bootstrap Buttons](http://v4-alpha.getboot
 
 #### 2j. Customize the "I watched it" Buttons
 
-In `flicklist.js`, add some additional styles to these buttons. We want the button to fill the entire width of its container, and sit 10px below its upper neighbor.
+In `styles.css`, add some additional styles to these buttons. We want the button to fill the entire width of its container, and sit 10px below its upper neighbor.
 
 ### 3. Responsive Grid Layout
 
-Now let's implement the grid layout. When the page is sufficiently wide, we want the browselist to show up to the right of the Watchlist, rather than below it.
+Now let's implement the grid layout. When the page is sufficiently wide, we want the Browselist to show up to the right of the Watchlist, rather than below it.
 
 #### 3a. Implement the Grid
 
-In `index.html`, add another `<div>` inside the main content div, but still wrapped around both sections. This new div should have a class of "row".
+In `index.html`, add another `<div>` inside the main content div (the one with the , but still wrapped around both sections. This new div should have a class of "row".
 
 Next, give each section a class of "col-?-?" (the question marks are for oyu to figure out). You want the watchlist to take up 5/12 of the width of the screen, and the browselist to take up the remaining 7/12. The "breakpoint" should be tablet devices-- in other words, if the user is on an iPad or anything smaller, then the column layout switches back to normal, with the browselist on its own block below the watchlist.
 
@@ -194,9 +194,9 @@ The last task to tackle is to add poster images to the Watchlist items. This inv
 
 #### 4a. Add Image Element to Watchlist Item
 
-Inside `render`, use jQuery to make an `<img>` element, and set its `src` attribute equal to the result calling of the `posterUrl` function inside the `api` object at the top of the file. When calling the function, don't forget to pass your movie in as an argument.
+Inside `index.html`, to make an `<img>` element, and set its `src` attribute equal to the result calling of the `posterUrl` function inside the `methods` section of your view. Since this is a javascript expression, we'll need to use Vue bind syntax. When calling the function, don't forget to pass your movie in as an argument.
 
-Once you have the element, append it inside the "body" portion of the Bootstrap panel (rather than the "heading" portion).
+Put the `<img>` element inside the "body" portion of the Bootstrap panel (rather than the "heading" portion).
 
 Also, give the image element a class of "img-responsive". This is another Bootstrap class that does some work for us, for example setting the element's width to be 100% of its container (and not more! otherwise it will stick out past the bounds of the container).
 
