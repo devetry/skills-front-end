@@ -92,27 +92,6 @@ There are only a few minor changes since last time, in just the `flicklist.js` f
 
 First, notice that the `searchMovies` function has a bunch of TODOs, and its `success` callback no longer has any code (aside from a `console.log` statement).
 
-The other small thing to notice is that, in a few places, a line that previously looked something like this:
-
-```js
-var itemView = $("<li></li>")
-   .attr("class", "list-group-item")
-   .append(title)
-   .append(overview)
-   .append(button);
-```
-
-now looks more like this:
-
-```js
-var itemView = $("<li></li>")
-   .attr("class", "list-group-item")
-   .append( [title, overview, button] );
-```
-
-The jQuery `append` function actually allows you to the option of passing in an array of child elements, and it will append each of them in the same order that they appear in the array. This simply allows us to make our code a bit more concise. Woohoo!
-
-
 ## Assignment
 
 Work your way through the TODOs in the source code. The tasks are numbered. You should work on them in the order prescribed, as follows:
@@ -123,7 +102,7 @@ As usual, add your api key to the object near the top of `flicklist.js`.
 
 ### 1. Add A second argument to the `discoverMovies` function.
 
-In the `discoverMovies` function, we now want to specify keywords in our request. Before we can do that, we need to accept another argument so that the caller of the function can decide what those keywords are. Add a second argument called `keywords` in the function declaration.
+In the `discoverMovies` function, we now want to specify keywords in our request. Before we can do that, we need to accept an argument so that the caller of the function can decide what those keywords are. Add an argument called `keywords` in the function declaration.
 
 ### 2. Include Keywords in Discover Request
 
@@ -135,7 +114,7 @@ Open up the developer tools and navigate to the Console tab. Notice that you can
 Type the following line:
 
 ```js
-discoverMovies(render, "3133|185633|3630|7010");
+flicklistView.discoverMovies("3133|185633|3630|7010");
 ```
 
 and press enter. If all goes well, you should see your browse list reload with some Vampire flicks!
@@ -154,7 +133,7 @@ console.log(response);
 
 so the response should show up in the console once you submit the form.
 
-Poke around inside the object and you shoudl see `.results` property like usual, but unlike previous responses, this array of results should not contain objects representing movies. Istead it should contain objects representing "keywords".
+Poke around inside the object and you should see `.results` property like usual, but unlike previous responses, this array of results should not contain objects representing movies. Istead it should contain objects representing "keywords".
 
 ### 4. Handle Search Response by Invoking Discover
 
@@ -180,7 +159,7 @@ Go ahead and change your call to `join` to take advantage of this.
 
 #### 4d. Invoke Discover
 
-Finally, invoke the `discoverMovies` function! Pass along the `callback` variable that was passed in, and the string holding the keywords, which you constructed above.
+Finally, invoke the `discoverMovies` function! Pass along the string holding the keywords, which you constructed above.
 
 Confirm that everything is working by opening your page in the browser and searching for some topics! You should see relevant movies (regardless of title) appear in the browse list.
 
