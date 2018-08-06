@@ -203,29 +203,18 @@ Switched to a new branch 'studio4'</code></pre>
 <h2 id="a-brief-tour">A Brief Tour</h2>
 <p>There are only a few minor changes since last time, in just the <code>flicklist.js</code> file.</p>
 <p>First, notice that the <code>searchMovies</code> function has a bunch of TODOs, and its <code>success</code> callback no longer has any code (aside from a <code>console.log</code> statement).</p>
-<p>The other small thing to notice is that, in a few places, a line that previously looked something like this:</p>
-<pre><code class="language-js">var itemView = $("&lt;li&gt;&lt;/li&gt;")
-   .attr("class", "list-group-item")
-   .append(title)
-   .append(overview)
-   .append(button);</code></pre>
-<p>now looks more like this:</p>
-<pre><code class="language-js">var itemView = $("&lt;li&gt;&lt;/li&gt;")
-   .attr("class", "list-group-item")
-   .append( [title, overview, button] );</code></pre>
-<p>The jQuery <code>append</code> function actually allows you to the option of passing in an array of child elements, and it will append each of them in the same order that they appear in the array. This simply allows us to make our code a bit more concise. Woohoo!</p>
 <h2 id="assignment">Assignment</h2>
 <p>Work your way through the TODOs in the source code. The tasks are numbered. You should work on them in the order prescribed, as follows:</p>
 <h3 id="0-api-key">0. API key</h3>
 <p>As usual, add your api key to the object near the top of <code>flicklist.js</code>.</p>
 <h3 id="1-add-a-second-argument-to-the">1. Add A second argument to the <code>discoverMovies</code> function.</h3>
-<p>In the <code>discoverMovies</code> function, we now want to specify keywords in our request. Before we can do that, we need to accept another argument so that the caller of the function can decide what those keywords are. Add a second argument called <code>keywords</code> in the function declaration.</p>
+<p>In the <code>discoverMovies</code> function, we now want to specify keywords in our request. Before we can do that, we need to accept an argument so that the caller of the function can decide what those keywords are. Add an argument called <code>keywords</code> in the function declaration.</p>
 <h3 id="2-include-keywords-in-discover-request">2. Include Keywords in Discover Request</h3>
 <p>Now that the <code>discoverMovies</code> function knows what keywords to use, the next task is to use them. When you make the AJAX request to the API, include these keywords. The <code>data</code> object is where you can specify additional things about the request.</p>
 <p>When you think you're done, verify that this is working by doing a little test:</p>
 <p>Open up the developer tools and navigate to the Console tab. Notice that you can click on the console and start typing. The console, in addition to displaying your <code>console.log</code> statements, also allows you to test code snippets and see the results.
 Type the following line:</p>
-<pre><code class="language-js">discoverMovies(render, "3133|185633|3630|7010");</code></pre>
+<pre><code class="language-js">flicklistView.discoverMovies("3133|185633|3630|7010");</code></pre>
 <p>and press enter. If all goes well, you should see your browse list reload with some Vampire flicks!</p>
 <h3 id="3-change-url-of-search-request">3. Change Url of Search Request</h3>
 <p>Now that <code>discoverMovies</code> is working, let's fix <code>searchMovies</code>. This function's job is going to change now. Rather than grab a bunch of movies directly from the API, our search function will simply request those keyword IDs from the API. Once the keyword IDs come back, we will invoke <code>discoverMovies</code> and pass the keywords along as an argument.</p>
@@ -233,7 +222,7 @@ Type the following line:</p>
 <p>Verify that your code is working correctly by entering a search term and submitting the form, and then opening up the console. The <code>success</code> callback contains this line:</p>
 <pre><code class="language-js">console.log(response);</code></pre>
 <p>so the response should show up in the console once you submit the form.</p>
-<p>Poke around inside the object and you shoudl see <code>.results</code> property like usual, but unlike previous responses, this array of results should not contain objects representing movies. Istead it should contain objects representing &quot;keywords&quot;.</p>
+<p>Poke around inside the object and you should see <code>.results</code> property like usual, but unlike previous responses, this array of results should not contain objects representing movies. Istead it should contain objects representing &quot;keywords&quot;.</p>
 <h3 id="4-handle-search-response-by-invoking-discover">4. Handle Search Response by Invoking Discover</h3>
 <p>Now that your search function is receiving keywords, the next step is to do something with those keywords. Basically, you want to collect those keywords into a string, and then pass that string over to <code>discoverMovies</code> and let it work its magic, taking advantage of the work you've already done over there.</p>
 <h3 id="4a-get-an-array-of-ids">4a. Get an Array of IDs</h3>
@@ -246,7 +235,7 @@ Type the following line:</p>
 <p>Rather than a comma-separated string, we want to insert a pipe character in between the ids. the secret to accomplishing this is that although the <code>join</code> function uses a comma character as the default content to intersperse between the elements, <code>join</code> also accepts an optional argument, where you can specify some other custom string.</p>
 <p>Go ahead and change your call to <code>join</code> to take advantage of this.</p>
 <h4 id="4d-invoke-discover">4d. Invoke Discover</h4>
-<p>Finally, invoke the <code>discoverMovies</code> function! Pass along the <code>callback</code> variable that was passed in, and the string holding the keywords, which you constructed above.</p>
+<p>Finally, invoke the <code>discoverMovies</code> function! Pass along the string holding the keywords, which you constructed above.</p>
 <p>Confirm that everything is working by opening your page in the browser and searching for some topics! You should see relevant movies (regardless of title) appear in the browse list.</p>
 <h3 id="5-change-button-text">5. Change Button Text</h3>
 <p>This last step is very easy. Our search button needs an update! Change the text from &quot;Search by Title&quot; to &quot;Search by Topic&quot;</p>
