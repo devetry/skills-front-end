@@ -169,28 +169,19 @@ Switched to a new branch 'studio3'</code></pre>
 <h2 id="a-brief-tour">A Brief Tour</h2>
 <p>Let's look briefly at what has changed in each of our files:</p>
 <h3 id="indexhtml">index.html</h3>
-<p>In <code>index.html</code>, the only important change is that we have wrapped our two <code>&lt;section&gt;</code>s together inside a <code>&lt;div&gt;</code> tag with a class of &quot;main-content&quot;. We have also removed the &quot;big-header&quot; id from the <code>&lt;header&gt;</code> at the top of our page. Since we'll be using Bootstrap to style this header, we no longer need to give it an id.</p>
+<p>In <code>index.html</code>, the only important change (besides the TODO comments) is that we have wrapped our two <code>&lt;section&gt;</code>s together inside a <code>&lt;div&gt;</code> tag with a class of &quot;main-content&quot;. We have also removed the &quot;big-header&quot; id from the <code>&lt;header&gt;</code> at the top of our page. Since we'll be using Bootstrap to style this header, we no longer need to give it an id.</p>
 <h3 id="flicklistjs">flicklist.js</h3>
-<p>The only change in <code>flicklist.js</code> is that the <code>api</code> object at the top of the file now has an extra property:</p>
-<pre><code class="language-js">var api = {
-  root: "https://api.themoviedb.org/3",
-  token: "TODO", // TODO 0 add your api key
-
-  /**
-   * Given a movie object, returns the url to its poster image
-   */
+<p>The only change in <code>flicklist.js</code> is that the <code>methods</code> object inside your view now has a new member:</p>
+<pre><code class="language-js">methods: {
+  // ...
   posterUrl: function(movie) {
     // TODO 4b
     // implement this function
 
     return "http://images5.fanpop.com/image/photos/25100000/movie-poster-rapunzel-and-eugene-25184488-300-450.jpg"
-  }
+  },
+  // ...
 }</code></pre>
-<p>The object now has three properties: <code>api.root</code>, <code>api.token</code>, and <code>api.posterUrl</code>. But <code>posterUrl</code> is a tad special, because rather than a simple primitive type like a string or int, <code>api.posterUrl</code> is a function!</p>
-<p>You can call this function like you would call any other:</p>
-<pre><code class="language-js">var myMovie = {}; // pretend we have some movie object lying around
-var url = api.posterUrl(myMovie);
-console.log(url); // =&gt; logs http://images5.fanpop.com/image/photos/25100000/movie-poster-rapunzel-and-eugene-25184488-300-450.jpg</code></pre>
 <p>One of your tasks will be to implement this function so that it returns, for a given movie, the url to a jpg somewhere on the internet where that movie's poster image lives.</p>
 <h3 id="stylescss">styles.css</h3>
 <p>We've made a few small changes here, like making the backgorund color of the browse section black, and adjusting a jew margin and padding values.</p>
@@ -202,8 +193,8 @@ console.log(url); // =&gt; logs http://images5.fanpop.com/image/photos/25100000/
 <h3 id="0-api-key">0. API key</h3>
 <p>As usual, add your api key to the object near the top of <code>flicklist.js</code>.</p>
 <h3 id="1-an-quoti-watched-itquot-button">1. An &quot;I watched it&quot; Button</h3>
-<p>In flicklist.js, inside the <code>render</code> function, add a button to each Watchlist item. When clicked, the appropriate movie should be removed from <code>model.watchlistItems</code>, and <code>render</code> should be called again.</p>
-<p>To remove the item from the array, you can use a new array function called <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">splice</a>. You'll also need to use <code>indexOf</code> again (you should be familiar with this function from the previous studio), in order to determine where to splice from the array.</p>
+<p>In index.html, add a button to each Watchlist item. When clicked, the appropriate movie should be removed from <code>watchlistItems</code>.</p>
+<p>To remove the item from the array, I recommend using the Array method <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>.</p>
 <h3 id="2-bootstrap-makeover-party">2. Bootstrap Makeover Party</h3>
 <p>Bootstrap comes with a ton of nice pre-made CSS styles &quot;right out of the box&quot;. We simply need to give our elements the appropriate class names, and they will automagically change appearence. There are a bunch of places all around the project where you will do this.</p>
 <h4 id="2a-include-the-library">2a. Include the Library</h4>
@@ -220,14 +211,14 @@ console.log(url); // =&gt; logs http://images5.fanpop.com/image/photos/25100000/
 <p>Also, the jumbotron by default has a margin of 30 pixels. This is going to become a little much if the user is on a smaller screen. Change the bottom margin to a value of <code>1%</code>. This both reduces the margin, and makes it &quot;fluid&quot;, calculating it as a percentage of the width, rather than a fixed value.</p>
 <p>Finally, note that this customization only works because in the head of <code>index.html</code>, we include our own stylesheet AFTER including Bootstrap.</p>
 <h4 id="2d-style-the-browse-list">2d. Style the Browse List</h4>
-<p>This task involves changing code in both <code>index.html</code> and <code>flicklist.js</code>.</p>
+<p>This task involves changing code in <code>index.html</code>.</p>
 <p>Read more about <a href="http://v4-alpha.getbootstrap.com/components/list-group/">Bootstrap Lists</a> and <a href="http://v4-alpha.getbootstrap.com/components/buttons/">Bootstrap Buttons</a> for guidance.</p>
 <h4 id="2e-style-the-form">2e. Style the Form</h4>
 <p>For guidance, read more about <a href="http://v4-alpha.getbootstrap.com/components/input-group/">Boostrap Input Groups</a>, especially <a href="http://v4-alpha.getbootstrap.com/components/input-group/#button-addons">Button Addons</a>.</p>
 <h4 id="2f-style-the-watchlist">2f. Style the Watchlist</h4>
 <p>This one's very simple. In index.html, just give the watchlist <code>&lt;ul&gt;</code> a class of <a href="http://getbootstrap.com/css/#inline">list-inline</a>. Remember that whole <code>"inline-block"</code> shenanigans we did last time? This class was made specifically for lists like the kind we're doing here.</p>
 <h4 id="2g-style-the-watchlist-items">2g. Style the Watchlist Items</h4>
-<p>In <code>flicklist.js</code>, restyle the watchlist items using <a href="http://getbootstrap.com/components/#panels-heading">Bootstrap Panels</a>.</p>
+<p>In the watchlist section of <code>index.html</code>, restyle the watchlist items using <a href="http://getbootstrap.com/components/#panels-heading">Bootstrap Panels</a>.</p>
 <h4 id="2h-customize-the-watchlist-items">2h. Customize the Watchlist Items</h4>
 <p>Let's customize these things a little more. Each <code>&lt;li&gt;</code> should have:</p>
 <ul>
@@ -238,11 +229,11 @@ console.log(url); // =&gt; logs http://images5.fanpop.com/image/photos/25100000/
 <h4 id="2i-style-the-quoti-watched-itquot-buttons">2i. Style the &quot;I watched it&quot; Buttons</h4>
 <p>Make 'em red. Here is the section on <a href="http://v4-alpha.getbootstrap.com/components/buttons/">Bootstrap Buttons</a> again.</p>
 <h4 id="2j-customize-the-quoti-watched-itquot-buttons">2j. Customize the &quot;I watched it&quot; Buttons</h4>
-<p>In <code>flicklist.js</code>, add some additional styles to these buttons. We want the button to fill the entire width of its container, and sit 10px below its upper neighbor.</p>
+<p>In <code>styles.css</code>, add some additional styles to these buttons. We want the button to fill the entire width of its container, and sit 10px below its upper neighbor.</p>
 <h3 id="3-responsive-grid-layout">3. Responsive Grid Layout</h3>
-<p>Now let's implement the grid layout. When the page is sufficiently wide, we want the browselist to show up to the right of the Watchlist, rather than below it.</p>
+<p>Now let's implement the grid layout. When the page is sufficiently wide, we want the Browselist to show up to the right of the Watchlist, rather than below it.</p>
 <h4 id="3a-implement-the-grid">3a. Implement the Grid</h4>
-<p>In <code>index.html</code>, add another <code>&lt;div&gt;</code> inside the main content div, but still wrapped around both sections. This new div should have a class of &quot;row&quot;.</p>
+<p>In <code>index.html</code>, add another <code>&lt;div&gt;</code> inside the main content div (the one with the , but still wrapped around both sections. This new div should have a class of &quot;row&quot;.</p>
 <p>Next, give each section a class of &quot;col-?-?&quot; (the question marks are for oyu to figure out). You want the watchlist to take up 5/12 of the width of the screen, and the browselist to take up the remaining 7/12. The &quot;breakpoint&quot; should be tablet devices-- in other words, if the user is on an iPad or anything smaller, then the column layout switches back to normal, with the browselist on its own block below the watchlist.</p>
 <p>Resize your window and see if it's working properly. At a certain point, the layout should switch back and forth.</p>
 <p>Read more on <a href="http://getbootstrap.com/css/#grid">Bootstrap Grids</a> for guidance.</p>
@@ -258,8 +249,8 @@ console.log(url); // =&gt; logs http://images5.fanpop.com/image/photos/25100000/
 <h3 id="4-poster-images">4. Poster Images</h3>
 <p>The last task to tackle is to add poster images to the Watchlist items. This involves two parts:</p>
 <h4 id="4a-add-image-element-to-watchlist-item">4a. Add Image Element to Watchlist Item</h4>
-<p>Inside <code>render</code>, use jQuery to make an <code>&lt;img&gt;</code> element, and set its <code>src</code> attribute equal to the result calling of the <code>posterUrl</code> function inside the <code>api</code> object at the top of the file. When calling the function, don't forget to pass your movie in as an argument.</p>
-<p>Once you have the element, append it inside the &quot;body&quot; portion of the Bootstrap panel (rather than the &quot;heading&quot; portion).</p>
+<p>Inside <code>index.html</code>, to make an <code>&lt;img&gt;</code> element, and set its <code>src</code> attribute equal to the result calling of the <code>posterUrl</code> function inside the <code>methods</code> section of your view. Since this is a javascript expression, we'll need to use Vue bind syntax. When calling the function, don't forget to pass your movie in as an argument.</p>
+<p>Put the <code>&lt;img&gt;</code> element inside the &quot;body&quot; portion of the Bootstrap panel (rather than the &quot;heading&quot; portion).</p>
 <p>Also, give the image element a class of &quot;img-responsive&quot;. This is another Bootstrap class that does some work for us, for example setting the element's width to be 100% of its container (and not more! otherwise it will stick out past the bounds of the container).</p>
 <h4 id="4b-implement-the-posterurl-function">4b. Implement the posterUrl function</h4>
 <p>Now we have to actually implement that function. Currently it just returns a hard-coded url. We want to examine the movie that was passed in, and figure out what the actual url should be.</p>
