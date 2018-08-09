@@ -64,8 +64,6 @@ Let's look over the code. Notice the following changes:
 
 	- `pyramidRows`, instead of directly modifying the DOM, now returns a list of strings: one for each row.
 
-	- We ripped most of the page out of html, and made it a view template
-
     - The "Draw a pyramid" button uses Vue's `@click="clearAndRedraw"` instead of `addEventListener`.
 
 	- Vue will give the height input a class if `this.error` is set (that's what the `:class="error ? 'invalid-field': null"` bit is doing).
@@ -84,7 +82,7 @@ You might also try looking through the [documentation for Vue.js][vue-js-docs], 
 
 Now go ahead and complete the following tasks:
 
-1. Fill out the `checkForErrors` function. It should return an error message if the given `heightStr` value is the empty string, not a number, less than 1, or more than 100. If there are no errors, return `null`.
+1. Fill out the `checkForErrors` function. It should return an error message if the given `heightStr` value is the empty string, not a number, less than 1, or more than 100. If there are no errors, return `null`. This piece is difficult to test by itself, because we haven't wired up the inputs or events yet. So, fire up the developer console, and try calling the function interactively. Does it do the right thing for `checkForErrors('0')`, `checkForErrors('10')`, `checkForErrors('')`, `checkForErrors('fifteen')`? Are there any other examples you can think of that would make good test cases?
 
 2. Since the error message from `checkForErrors` is being set in `clearAndRedraw` as `this.error`, it's available in our template. Use the double curly braces (`{{ }}`) to show the error message. Hint: you won't need to refer to `this`, the template assumes that's where your data is stored.
 
