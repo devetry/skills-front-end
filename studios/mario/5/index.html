@@ -199,9 +199,6 @@ Already up-to-date.</code></pre>
 <p><code>pyramidRows</code>, instead of directly modifying the DOM, now returns a list of strings: one for each row.</p>
 </li>
 <li>
-<p>We ripped most of the page out of html, and made it a view template</p>
-</li>
-<li>
 <p>The &quot;Draw a pyramid&quot; button uses Vue's <code>@click="clearAndRedraw"</code> instead of <code>addEventListener</code>.</p>
 </li>
 <li>
@@ -222,7 +219,7 @@ Already up-to-date.</code></pre>
 <p>Now go ahead and complete the following tasks:</p>
 <ol>
 <li>
-<p>Fill out the <code>checkForErrors</code> function. It should return an error message if the given <code>heightStr</code> value is the empty string, not a number, less than 1, or more than 100. If there are no errors, return <code>null</code>.</p>
+<p>Fill out the <code>checkForErrors</code> function. It should return an error message if the given <code>heightStr</code> value is the empty string, not a number, less than 1, or more than 100. If there are no errors, return <code>null</code>. This piece is difficult to test by itself, because we haven't wired up the inputs or events yet. So, fire up the developer console, and try calling the function interactively. Does it do the right thing for <code>checkForErrors('0')</code>, <code>checkForErrors('10')</code>, <code>checkForErrors('')</code>, <code>checkForErrors('fifteen')</code>? Are there any other examples you can think of that would make good test cases?</p>
 </li>
 <li>
 <p>Since the error message from <code>checkForErrors</code> is being set in <code>clearAndRedraw</code> as <code>this.error</code>, it's available in our template. Use the double curly braces (<code>{{ }}</code>) to show the error message. Hint: you won't need to refer to <code>this</code>, the template assumes that's where your data is stored.</p>
