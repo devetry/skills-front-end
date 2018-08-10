@@ -19,11 +19,11 @@ Follow these steps to get started:
 
 ### Fork the FlickList Repo
 
-Once you have signed into github, head over to the repository where our class project is hosted: [https://github.com/LaunchCodeEducation/flicklist](https://github.com/LaunchCodeEducation/flicklist).
+Once you have signed into github, head over to the repository where our class project is hosted: [https://github.com/bgschiller/flicklist-vuejs](https://github.com/bgschiller/flicklist-vuejs).
 
 To work on this project, you'll need to *fork* your own version of it. Near the upper-right corner of the screen, you should see a button that says "Fork". Click it!
 
-You should now be taken to a new, nearly identical project page. But instead of `LaunchCodeEducation/flicklist`, this is `YOURUSERNAME/flicklist`.
+You should now be taken to a new, nearly identical project page. But instead of `bgschiller/flicklist-vuejs`, this is `YOURUSERNAME/flicklist-vuejs`.
 
 ### Clone your Fork
 
@@ -32,7 +32,7 @@ Now that you have your own *remote* repository hosted on GitHub, it's time to st
 Open up the terminal, and `cd` into the parent folder where you want this project to live. Then clone your repo:
 
 ```nohighlight
-$ git clone https://github.com/YOURUSERNAME/flicklist.git
+$ git clone https://github.com/YOURUSERNAME/flicklist-vuejs.git
 Cloning into 'flicklist'...
 remote: Counting objects: 103, done.
 remote: Compressing objects: 100% (49/49), done.
@@ -46,13 +46,13 @@ You should now see a new folder.
 
 ```nohighlight
 $ ls
-flicklist
+flicklist-vuejs
 ```
 
 Have a look inside:
 
 ```nohighlight
-$ cd flicklist/
+$ cd flicklist-vuejs/
 $ ls
 README.md  css/  index.html  js/
 ```
@@ -202,4 +202,4 @@ To https://github.com/bobthebuilder/flicklist.git
  * [new branch]      studio0 -> studio0
 ```
 
-If you go back and revisit `https://github.com/bobthebuilder/flicklist`, you should now see your new branch up there!
+If you go back and revisit `https://github.com/bobthebuilder/flicklist-vuejs`, you should now see your new branch up there!
