@@ -16,7 +16,7 @@ Note the following additions since last time:
 * The browse section layout uses the Bootstrap grid system, in fact a *nested* grid: At the macro level, the section is split into two columns, and then the column on the left is subdivided into two smaller columns:
 	* (A) a column on the left for the movie info and carousel, which is further subdivided into:
 		* (A-1) a column on the left for the movie title and overview.
-		* (A-2) a column on the right for the carousel and the "Add to Watchlist" button. 	
+		* (A-2) a column on the right for the carousel and the "Add to Watchlist" button.
 	*  (B) a column on the right for the search form.
 
 ## Starter Code
@@ -87,7 +87,7 @@ A few things to point out:
 
 ### 2. Add Some Dummy Data
 
-Next, let's hard-code some fake content into your HTML page. Later you will delete this and use jQuery to add the real content dynamically, but this intermediate step should help clarify how to do that.
+Next, let's hard-code some fake content into your HTML page. Later you will delete this and use Vue to render the real content dynamically, but this intermediate step should help clarify how to do that.
 
 In `index.html`, add the following content:
 
@@ -96,15 +96,43 @@ In `index.html`, add the following content:
 
 ### 3. Create the Carousel
 
-Now for the fun part: inside Container A-2, create a Bootstrap Carousel. How does one do that? It's essentially just like the other Bootstrap components we've already seen, but more complex, and composed of multiple elements rather than just one. You simply create some elements and wire them up with them the right class and id names and other attributes, and Bootstrap will work behind the scenes to make everything function properly.
+Now for the fun part: inside Container A-2, create a Bootstrap Carousel. How does one do that? It's essentially just like the other Bootstrap components we've already seen, but more complex, and composed of multiple elements rather than just one. You simply create some elements and wire them up with them the right class and id names and other attributes, and Bootstrap will style everything properly.
 
-Actually, for this task we are going to need to include Bootstrap's javascript library (we currently only have their CSS). So the first step is to head to [the bootstrap site](http://getbootstrap.com/getting-started/#download-cdn) and copy/paste their "Latest compiled and minified JavaScript" into the top of `index.html`.
+Some of the docs will refer to bootstrap making the carousel move automatically. That's what the `data-ride="carousel"` or `$('.carousel').carousel()` bits are doing. We won't be using those pieces. Those both require using Bootstrap's javascript library, and jQuery, which don't play nicely with Vue and the way the rest of the site works.
 
-Now it's time to create the carousel. Check out [this Codepen example](http://codepen.io/jesselaunchcode/pen/ZWZyeX) (which I made, and which mirrors exactly what you want to do (make sure you expand the "html" window on Codepen so you don't go insane trying to read from a tiny box)), and also [this W3 Schools example](http://www.w3schools.com/bootstrap/bootstrap_carousel.asp) (which has some extra stuff we don't care about, but provides explanations of the various parts, which you should read).
+So we'll use Bootstrap's styling for the carousel, but we'll make it move ourselves instead of using their javascript.
 
-Build your carousel, and fill it with 3 movie poster images, using posters from the internet [like this](http://sumnersunsettheatre.com/wp-content/uploads/Minions-poster.jpg). Give your carousel an attribute of `id=browse-carousel` Make sure to also include the left and right "data slide" buttons, and make sure they work.
+Now it's time to create the carousel. Check out [this Codepen example](https://codepen.io/bgschiller/pen/eLmyWm) (which I made, and which mirrors exactly what you want to do (make sure you expand the "html" window on Codepen so you don't go insane trying to read from a tiny box)), and also [this W3 Schools example](http://www.w3schools.com/bootstrap/bootstrap_carousel.asp) (which has some extra stuff we don't care about, but provides explanations of the various parts, which you should read).
 
-Finally add this rule to your `styles.css` file:
+To build your carousel:
+
+1. Find the urls of three or so movie posters. Store them in the `data` portion of your Vue in a new model property. Something like
+```
+  watchlistItems: [],
+  browseItems: [],
+  imgs: [
+        "https://....jpg",
+        "https://....jpg",
+        "http://....jpg",
+  ],
+```
+2. In the same section, make another value called `activeIx`, and set it to be 0 initially.
+3. Add the `nextImg` and `prevImg` methods. Feel free to copy them from the codepen example.
+4. Now that we have the data, we can write the template portion. There's some funky syntax involved in setting the class portion:
+```
+<li
+    v-for="(imgSrc, ix) in imgs"
+    :class="{
+        'carousel-item': true,
+        active: ix == activeIx,
+    }"
+>
+```
+The v-for isn't too different from what we've seen. It does include the `ix`, which will be `0, 1, 2, ...`&mdash;the position of each image in the list.
+
+That class syntax looks funny though. Vue allows you to pass a whole object to set a class, which is convenient in cases like this. When an object is given, Vue interprets the keys to be the class names to apply. It will apply them _only if_ the value is `true`. So in the case above, `carousel-item` will be applied to every `<li>`, and `active` will be applied only when `ix == activeIx`.
+
+Finally, add this rule to your `styles.css` file:
 
 ```css
 #browse-carousel {
@@ -115,137 +143,35 @@ Finally add this rule to your `styles.css` file:
 
 which will ensure that the carousel does not get annoyingly large, and is centered horizontally in its container.
 
-### 4. New Model Property
+Give your carousel a try, make sure it works.
 
-Now that you have the page layout and the carousel all set up, it's time to feed your app the actual movie data. You will do this by refactoring some of your javascript code in `flicklist.js`.
+### 4. Refactor the template
 
-The big change is that we no longer want the browse section to display a *list* of movies. We only want to display one at a time. Our underlying model should still use a list (i.e. `model.browseItems`) because we want to keep track of all the movies and have them around-- it's just that user will only visibily see one at a time.
+#### 4a. Use the actual movie posters
 
-This means that our `model` object will need a third property. Not only do we need to keep track of the list of browse items, we also need to keep track of *which item*, at any given moment, is the "active" one on display.
+Now let's fill the carousel with the actual movie poster images. Instead of iterating over our stub `imgs` list, we'll use `browseItems`.
 
-Add another property to the `model` variable. Name the property `activeMovieIndex`, and set it equal to `0`. This number represents which item from the browseItems array is currently active. So for example, because we start off with `0`, this means the first item in the array is the active movie.
+#### 4b. Make a new computed property: activeMovie
 
-### 5. Refactor the render Function
+We have the `activeIx`, but it would be more convenient to have the _whole_ movie available to use (especially for the next step).
 
-The old `render` function, when adding the content to the browse section, iterates over each item in `model.browselist`. This doesn't really make sense anymore since we only want to display one browse item at any given time.
+This is exactly what computed properties were designed for! Let's make a new computed property called `activeMovie`. It should have the value of `this.browseItems[this.activeIx]`.
 
-#### 5a. Delete the old Code!
+#### 4c. Title and Overview
 
-Go ahead and delete this whole block of code:
-
-```js
-model.browseItems.forEach(function(movie) {
-  ...
-});
-
-```
-
-Gasp! (Actually, just comment it out. But cut and paste it to the bottom of the file or somewhere else out of the way.)
-
-
-#### 5b. Figure out the Current Active Movie
-
-Now let's get started building a fresh implementation of displaying the browse section. You should still be inside the `render` function, in the same place where the dust is still settling from decimating the old code.
-
-First, we will need to know which movie object is the currently active one. Make a variable:
-
-```js
-var activeMovie =   // TODO fill this in
-```
-
-and give it the correct value. (Remember, you have a list of browse items, and you have a number telling you which index is the active index).
-
-#### 5c. Title and Overview
-
-Next, replace the hard-coded "Twilight" content with the actual title and overview for the currently active movie. (Remember, you gave the container an id of "browse-info".)
-
-
-#### 5d. Revive the "Add to Watchlist" Button
-
-Previously we created a new button for each browse item, but now we just have one permanent button which you have already added to the HTML page. But that button doesn't work and is ugly. Bring it back to life!
-
-Your old code looked like this:
-
-```js
-var button = $("<button></button>")
-   .text("Add to Watchlist")
-   .attr("class", "btn btn-primary")
-   .click(function() {
-     model.watchlistItems.push(movie);
-     render();
-   })
-   .prop("disabled", model.watchlistItems.indexOf(movie) !== -1);
-```
-
-You pretty much want to do all that same stuff here. The only difference is that instead of *creating a new button* and storing it in a variable, you just need to modify the existing button (Remember, you gave it an id attribute).
-
-#### 5e. Fill the Carousel
-
-Now let's fill the carousel with movie poster images. Here's some starter code:
-
-```js
-// fill carousel with posters
-var posters = model.browseItems.map(function(movie) {
- // TODO
- // return a list item with an img inside  
-});
-$("TODO").append(posters);
-```
-
-As you can see, we are mapping over the browseItems to create an array of elements. Then we are appending those elements into the carousel.
-
-Inside the `map` callback, you should break that down into two steps: first, create a poster image (you can look up to remember how you did that in the watchlist), and then append it into an `<li>`. Remember, your `<li>` needs to have a special class name of `"item"` in order for the Bootstrap carousel to recognize it.
-
-You also must fill in that jQuery selector to make sure you are appending the list items into the apropriate place.
-
-#### 5f. Activate the Correct Poster Item
-
-The carousel also requires that exactly one list item also has a class of `"active"`.
-
-Here's a freebie:
-
-```js
-posters[model.activeMovieIndex].addClass("active");
-```
-
-Just add the above line. But don't paste it, type it out yourself!
-
-### 6. Respond to Carousel Sliding
-
-Your page should now have a working carousel with actual movie data in it.
-
-There is still one bug, which is that whenever the carousel slides to show a new movie poster, the rest of the app fails to respond. The title, overview, and everything else continue to show the previous movie.
-
-To solve this problem we must, actively respond whenever the carousel has slid to a new movie. We have already started this for you in the script at the bottom of `index.html`:
-
-```js
-$("#browse-carousel").on("slid.bs.carousel", function() {
-   console.log("the carousel just slid!");
-   var newIndex = $("#browse-carousel").find(".active").index();
-   // TODO
-   // update the model and then re-render
-});
-```
-
-This code block uses a jQuery function called `on` which allows us to register a callback that will be executed whenever a certain event happens. In our case the event is the carousel sliding, which Bootstrap makes available under the name "slid.bs.carousel". This is just like a normal button with a `click` handler, but the `on` function lets you specify any event, not just a click. In fact, you actually can use `on` with buttons. The following two code blocks are equivalent:
-
-```js
-$("#mybutton").on("click", function() {
-   console.log("somebody clicked my button!");
-});
-```
-
-```js
-$("#mybutton").click(function() {
-   console.log("somebody clicked my button!");
-});
-```
-
-Anyway, whenever the carousel has slid to a new position, that annonymous function will be executed. We've left a TODO in there for you. The goal is to update the model (remember that your model must keep track of the current active movie index), and then re-render everything. In the line above the TODO, we've already done the hard part of figuring out what the new carousel index is, by using some new jQuery functions, `find` and `index`, whose purpose you can hopefully infer from their usage here.
+Next, replace the hard-coded "Twilight" content with the actual title and overview for the currently active movie. Now that you have your computed property, you should be able to access that info using, eg, `activeMovie.overview`
 
 Once you've got this working, your page should update its content whenever the carousel slides!
 
-### 7. CSS
+#### 4d. Revive the "Add to Watchlist" Button
+
+Previously we created a new button for each browse item, but now we just have one permanent button which you have already added to the HTML page. But that button doesn't work and is ugly. Bring it back to life!
+
+Remember, it should call the `addToWatchlist` function. This time, we know it will always pass along `activeMovie`, instead of a different movie for each button.
+
+It should also be disabled if the movie has already been added to the watchlist. I can think of a couple ways to do this. One of them is more similar to our code from last time (something like `watchlistItems.includes(movie)`), and the other one pushes that code into a computed property.
+
+### 5. CSS
 
 The last step is to add some CSS and make everything look tidy. No guidance on this one! You got this. Just compare your version to the demo and rig up some CSS rules to make it work.
 

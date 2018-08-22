@@ -158,9 +158,9 @@ Look inside the folder:
 ```nohighlight
 $ cd the-ajaxson-5/
 $ ls
-index.html request-gif.js
+README.md index.html request-gif.js screenshots
 ```
-You should see only two files: `index.html` and `request-gif.js`.
+We're only going to edit `index.html` and `request-gif.js`&mdash;the other files are there as documentation.
 
 
 #### index.html
