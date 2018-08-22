@@ -132,16 +132,26 @@ The v-for isn't too different from what we've seen. It does include the `ix`, wh
 
 That class syntax looks funny though. Vue allows you to pass a whole object to set a class, which is convenient in cases like this. When an object is given, Vue interprets the keys to be the class names to apply. It will apply them _only if_ the value is `true`. So in the case above, `carousel-item` will be applied to every `<li>`, and `active` will be applied only when `ix == activeIx`.
 
-Finally, add this rule to your `styles.css` file:
+Finally, add these rules to your `styles.css` file:
 
 ```css
+/* Make sure the carousel does not get annoyingly large,
+  and is centered horizontally in its container. */
 #browse-carousel {
 	max-width: 300px;
 	margin: auto;
 }
+
+/* We'll make carousel-items invisible... */
+.carousel-item {
+  display: none;
+}
+/* ...unless they're the active one! */
+.carousel-item.active {
+  visibility: visible;
+}
 ```
 
-which will ensure that the carousel does not get annoyingly large, and is centered horizontally in its container.
 
 Give your carousel a try, make sure it works.
 
@@ -176,6 +186,22 @@ It should also be disabled if the movie has already been added to the watchlist.
 The last step is to add some CSS and make everything look tidy. No guidance on this one! You got this. Just compare your version to the demo and rig up some CSS rules to make it work.
 
 One hint, regarding your carousel: remember that a `<ul>`, by default, has some padding on the left side.
+
+### 6. Challenge tasks!
+
+#### 6a. Make the carousel advance automatically (on a timer)
+
+In the example, the carousel moves on it's own every few seconds. That's a feature built-in to the jQuery-controlled code, but we can implement it without too much trouble.
+
+We've talked about the `setTimeout` function a couple of times during class. Use it to call `nextImg` every five seconds or so. Hint: part of the job of doing a rotation is scheduling the *next* rotation.
+
+Extra tough: sometimes the user will click the 'next' or 'previous' buttons on their own, and the timer will fire just afterwards. That makes for a jarring user experience. Try and figure out how to keep that from happening.
+
+#### 6b. Use transitions to animate the carousel
+
+Check out [animate.css](https://daneden.github.io/animate.css/), as well as the [vue docs on transitions](https://vuejs.org/v2/guide/transitions.html).
+
+This is a tougher challenge. It may require changing how we render the items in the carousel from a list of pictures to just one picture at a time.
 
 ## Commit and Push on Git
 
