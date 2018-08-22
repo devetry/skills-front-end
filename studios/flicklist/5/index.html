@@ -244,12 +244,22 @@ v-for="(imgSrc, ix) in imgs"
 <p>The v-for isn't too different from what we've seen. It does include the <code>ix</code>, which will be <code>0, 1, 2, ...</code>&mdash;the position of each image in the list.</p></li>
 </ol>
 <p>That class syntax looks funny though. Vue allows you to pass a whole object to set a class, which is convenient in cases like this. When an object is given, Vue interprets the keys to be the class names to apply. It will apply them <em>only if</em> the value is <code>true</code>. So in the case above, <code>carousel-item</code> will be applied to every <code>&lt;li&gt;</code>, and <code>active</code> will be applied only when <code>ix == activeIx</code>.</p>
-<p>Finally, add this rule to your <code>styles.css</code> file:</p>
-<pre><code class="language-css">#browse-carousel {
+<p>Finally, add these rules to your <code>styles.css</code> file:</p>
+<pre><code class="language-css">/* Make sure the carousel does not get annoyingly large,
+  and is centered horizontally in its container. */
+#browse-carousel {
     max-width: 300px;
     margin: auto;
+}
+
+/* We'll make carousel-items invisible... */
+.carousel-item {
+  display: none;
+}
+/* ...unless they're the active one! */
+.carousel-item.active {
+  visibility: visible;
 }</code></pre>
-<p>which will ensure that the carousel does not get annoyingly large, and is centered horizontally in its container.</p>
 <p>Give your carousel a try, make sure it works.</p>
 <h3 id="4-refactor-the-template">4. Refactor the template</h3>
 <h4 id="4a-use-the-actual-movie-posters">4a. Use the actual movie posters</h4>
@@ -267,6 +277,14 @@ v-for="(imgSrc, ix) in imgs"
 <h3 id="5-css">5. CSS</h3>
 <p>The last step is to add some CSS and make everything look tidy. No guidance on this one! You got this. Just compare your version to the demo and rig up some CSS rules to make it work.</p>
 <p>One hint, regarding your carousel: remember that a <code>&lt;ul&gt;</code>, by default, has some padding on the left side.</p>
+<h3 id="6-challenge-tasks">6. Challenge tasks!</h3>
+<h4 id="6a-make-the-carousel-advance-automatically-on-a-timer">6a. Make the carousel advance automatically (on a timer)</h4>
+<p>In the example, the carousel moves on it's own every few seconds. That's a feature built-in to the jQuery-controlled code, but we can implement it without too much trouble.</p>
+<p>We've talked about the <code>setTimeout</code> function a couple of times during class. Use it to call <code>nextImg</code> every five seconds or so. Hint: part of the job of doing a rotation is scheduling the <em>next</em> rotation.</p>
+<p>Extra tough: sometimes the user will click the 'next' or 'previous' buttons on their own, and the timer will fire just afterwards. That makes for a jarring user experience. Try and figure out how to keep that from happening.</p>
+<h4 id="6b-use-transitions-to-animate-the-carousel">6b. Use transitions to animate the carousel</h4>
+<p>Check out <a href="https://daneden.github.io/animate.css/">animate.css</a>, as well as the <a href="https://vuejs.org/v2/guide/transitions.html">vue docs on transitions</a>.</p>
+<p>This is a tougher challenge. It may require changing how we render the items in the carousel from a list of pictures to just one picture at a time.</p>
 <h2 id="commit-and-push-on-git">Commit and Push on Git</h2>
 <p>When you have finished (or class ends), commit your changes on Git and push them up to your remote repo on Github.</p>
 <p>If you run the <code>git status</code> command, you should see that you now have <em>unstaged</em> changes:</p>
