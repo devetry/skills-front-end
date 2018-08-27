@@ -9,7 +9,7 @@ Before coming to Class 10, please complete the following tasks:
 
 Done | Task | Resource Type | Link | Time Estimate | Instructions
 -----|------|---------------|------|---------------|-------------
-<input type="checkbox" v-model="checks.p10a" /> | Follow Along | Exercise | 30 minutes | [FlickList 2 Solution](https://github.com/LaunchCodeEducation/flicklist/tree/studio2-staff-solution) | Read over (and maybe even code along with) the staff solution to the previous Studio, so that you're up to speed with the starter code for the upcoming one.
+<input type="checkbox" v-model="checks.p10a" /> | Follow Along | Exercise | 30 minutes | [FlickList 2 Solution](https://github.com/bgschiller/flicklist-vuejs/tree/studio2-solution) | Read over (and maybe even code along with) the staff solution to the previous Studio, so that you're up to speed with the starter code for the upcoming one.
 
 
 ### Responsiveness
