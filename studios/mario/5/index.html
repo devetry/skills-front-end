@@ -201,9 +201,7 @@ Already up-to-date.</code></pre>
 <li>
 <p>The &quot;Draw a pyramid&quot; button uses Vue's <code>@click="clearAndRedraw"</code> instead of <code>addEventListener</code>.</p>
 </li>
-<li>
-<p>Vue will give the height input a class if <code>this.error</code> is set (that's what the <code>:class="error ? 'invalid-field': null"</code> bit is doing).</p>
-</li>
+<li>Vue will give the height input a class if <code>this.error</code> is set (that's what the <code>:class="error ? 'invalid-field': null"</code> bit is doing).</li>
 </ul>
 </li>
 </ul>
@@ -233,9 +231,7 @@ Already up-to-date.</code></pre>
 <li>
 <p>Fill out the other computed property, <code>rows</code>. It should return the result of calling <code>pyramidRows</code> on <code>this.height</code>. Use your new computed property towards the bottom of <code>clearAndRedraw</code>.</p>
 </li>
-<li>
-<p>Now we get to the good stuff! We're going to get to remove that ugly direct DOM manipulation code (almost all of <code>clearAndRedraw</code>). Instead, we'll use a nice declarative template. Inside the <code>#pyramid</code> div in the template, add the following:</p>
-</li>
+<li>Now we get to the good stuff! We're going to get to remove that ugly direct DOM manipulation code (almost all of <code>clearAndRedraw</code>). Instead, we'll use a nice declarative template. Inside the <code>#pyramid</code> div in the template, add the following:</li>
 </ol>
 <pre><code class="language-html">&lt;p v-for="row in rows" v-html="row" /&gt;</code></pre>
 <p>This says &quot;make a <code>&lt;p&gt;</code> for each entry in rows. Each p's <code>.innerHTML</code> should be set to the value of <code>row</code>.</p>
