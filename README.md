@@ -15,8 +15,8 @@ Class # | Date | Prep Work | Studio | New Topics | Begin Assignment
 7 | Aug 13 | [Class 7 Prep](../class-prep/7/) | [FlickList 0](../studios/flicklist/0/) | AJAX | |
 8 | Aug 16 | [Class 8 Prep](../class-prep/8/) | [FlickList 1](../studios/flicklist/1/) | Browser developer tools | Start [🐘 The AJAXson 5](../assignments/ajaxson-5/) |
 9 | Aug 20 | [Class 9 Prep](../class-prep/9/) | [FlickList 2](../studios/flicklist/2/) | Semantic HTML | |
-10 | Aug 23 | [Class 10 Prep](../class-prep/10/) | [FlickList 3](../studios/flicklist/3/) | Responsiveness; Bootstrap | |
-11 | Aug 27 | [Class 11 Prep](../class-prep/11/) | [FlickList 4](../studios/flicklist/4/) | Chaining API calls and surviving "callback hell" | Start [🐘 Word Up!](../assignments/word-up/) |
-12 | Aug 30 | [Class 12 Prep](../class-prep/12/) | [FlickList 5](../studios/flicklist/5/) | Nested Bootstrap grids; Bootstrap carousels | |
-13 | Sept 3 | [Class 13 Prep](../class-prep/13/) | (no studio) | (work day) | |
-14 | Sept 7 | [Class 14 Prep](../class-prep/14/) | (no studio) | Web Programming Beyond LC101 | |
+10 | Aug 23 | [Class 10 Prep](../class-prep/10/) | (no studio) | learn about `this` and spread operator | |
+11 | Aug 27 | [Class 11 Prep](../class-prep/11/) | [FlickList 3](../studios/flicklist/3/)  | Responsiveness; Bootstrap | Start [🐘 Word Up!](../assignments/word-up/) |
+12 | Aug 30 | [Class 12 Prep](../class-prep/12/) | [FlickList 4](../studios/flicklist/4/)  | Chaining API calls and surviving "callback hell" | |
+13 | Sept 3 |  | (no class, labor day) |  | |
+14 | Sept 7 | [Class 14 Prep](../class-prep/14/) | [FlickList 5](../studios/flicklist/5/) | Nested Bootstrap grids; Bootstrap carousels | |
