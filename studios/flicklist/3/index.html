@@ -184,7 +184,7 @@ Switched to a new branch 'studio3'</code></pre>
 }</code></pre>
 <p>One of your tasks will be to implement this function so that it returns, for a given movie, the url to a jpg somewhere on the internet where that movie's poster image lives.</p>
 <h3 id="stylescss">styles.css</h3>
-<p>We've made a few small changes here, like making the backgorund color of the browse section black, and adjusting a jew margin and padding values.</p>
+<p>We've made a few small changes here, like making the background color of the browse section black, and adjusting a few margin and padding values.</p>
 <p>Notice that in some cases we use a new unit of measurement, the percent, for specifying values. For example, all sections now have a `padding: 2%;&quot; rule. Using 2% rather than a rigid pixel value means that the exact padding changes depending on the width of the container of the section. This helps make our page more responsive, because a certain number of pixels, like say 20px, might seem too small when the screen is very large, but might be too much once the screen is very small.</p>
 <p>Finally, notice that we specify <code>&lt;hr&gt;</code> elements to have a border color of <code>rgba(128,128,128,0.2)</code>. This gives the <code>&lt;hr&gt;</code> a translucent gray color.</p>
 <h2 id="assignment">Assignment</h2>
@@ -233,7 +233,7 @@ Switched to a new branch 'studio3'</code></pre>
 <h3 id="3-responsive-grid-layout">3. Responsive Grid Layout</h3>
 <p>Now let's implement the grid layout. When the page is sufficiently wide, we want the Browselist to show up to the right of the Watchlist, rather than below it.</p>
 <h4 id="3a-implement-the-grid">3a. Implement the Grid</h4>
-<p>In <code>index.html</code>, add another <code>&lt;div&gt;</code> inside the main content div (the one with the , but still wrapped around both sections. This new div should have a class of &quot;row&quot;.</p>
+<p>In <code>index.html</code>, add another <code>&lt;div&gt;</code> inside the main content div (the one with the <code>id="mount-target"</code>), but still wrapped around both sections. This new div should have a class of &quot;row&quot;.</p>
 <p>Next, give each section a class of &quot;col-?-?&quot; (the question marks are for oyu to figure out). You want the watchlist to take up 5/12 of the width of the screen, and the browselist to take up the remaining 7/12. The &quot;breakpoint&quot; should be tablet devices-- in other words, if the user is on an iPad or anything smaller, then the column layout switches back to normal, with the browselist on its own block below the watchlist.</p>
 <p>Resize your window and see if it's working properly. At a certain point, the layout should switch back and forth.</p>
 <p>Read more on <a href="http://getbootstrap.com/css/#grid">Bootstrap Grids</a> for guidance.</p>
