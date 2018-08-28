@@ -54,7 +54,7 @@ One of your tasks will be to implement this function so that it returns, for a g
 
 ### styles.css
 
-We've made a few small changes here, like making the backgorund color of the browse section black, and adjusting a jew margin and padding values.
+We've made a few small changes here, like making the background color of the browse section black, and adjusting a few margin and padding values.
 
 Notice that in some cases we use a new unit of measurement, the percent, for specifying values. For example, all sections now have a `padding: 2%;" rule. Using 2% rather than a rigid pixel value means that the exact padding changes depending on the width of the container of the section. This helps make our page more responsive, because a certain number of pixels, like say 20px, might seem too small when the screen is very large, but might be too much once the screen is very small.
 
@@ -146,7 +146,7 @@ Now let's implement the grid layout. When the page is sufficiently wide, we want
 
 #### 3a. Implement the Grid
 
-In `index.html`, add another `<div>` inside the main content div (the one with the , but still wrapped around both sections. This new div should have a class of "row".
+In `index.html`, add another `<div>` inside the main content div (the one with the `id="mount-target"`), but still wrapped around both sections. This new div should have a class of "row".
 
 Next, give each section a class of "col-?-?" (the question marks are for oyu to figure out). You want the watchlist to take up 5/12 of the width of the screen, and the browselist to take up the remaining 7/12. The "breakpoint" should be tablet devices-- in other words, if the user is on an iPad or anything smaller, then the column layout switches back to normal, with the browselist on its own block below the watchlist.
 
