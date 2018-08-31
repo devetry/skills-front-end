@@ -100,13 +100,13 @@ Work your way through the TODOs in the source code. The tasks are numbered. You 
 
 As usual, add your api key to the object near the top of `flicklist.js`.
 
-### 1. Add A second argument to the `discoverMovies` function.
+### 1. Add an argument to the `discoverMovies` function.
 
 In the `discoverMovies` function, we now want to specify keywords in our request. Before we can do that, we need to accept an argument so that the caller of the function can decide what those keywords are. Add an argument called `keywords` in the function declaration.
 
 ### 2. Include Keywords in Discover Request
 
-Now that the `discoverMovies` function knows what keywords to use, the next task is to use them. When you make the AJAX request to the API, include these keywords. The `data` object is where you can specify additional things about the request.
+Now that the `discoverMovies` function knows what keywords to use, the next task is to use them. When you make the fetch request to the API, include the keywords. You should be able to add a new query param after the `?api_key=123...987`. Remember: multiple query parameters are separated by `&`s. For example: `example.com?user_id=3&q=12`.
 
 When you think you're done, verify that this is working by doing a little test:
 
