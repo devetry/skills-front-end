@@ -3,6 +3,8 @@ title: "Word Up!"
 currentMenu: assignments
 ---
 
+## Word Up!
+
 As we near the end of a long Skill Track full boring things like movies, GIFs, and pyramids--the practicalities of life that, though perhaps necessary, are rather dull--you deserve some fun and games. So for this assignment, you will make a fun game!
 
 ## The Goal
@@ -30,10 +32,10 @@ Take note the following:
 
 #### The User Interface
 
-- When the user clicks `New Game`, the letters are revealed and she can begin typing words.
+- When the user clicks `New Game`, the letters are revealed and they can begin typing words.
 - The letters are presented as little "chips" (I am going to refer to these things as chips throughout the assignment).
 - Each letter chip contains a smaller chip indicating its points value.
-- As the user types, the page provides continuous feedback. Specifically, if the word she is currently typing contains any letters that are not allowed, then the disallowed letters appear as red chips underneath the textbox.
+- As the user types, the page provides continuous feedback. Specifically, if the word they are currently typing contains any letters that are not allowed, then the disallowed letters appear as red chips underneath the textbox.
 - If the user tries to submit (presses Enter after typing) a word that contains disallowed letters, then the textbox simply clears and the word is not submitted.
 - Once the user does submit a word containing only valid letters, it appears in a chip below the textbox.
 - Shortly after a word chip appears, it will sprout a smaller (blue or red) chip indicating the points total for the word. A normal word will contain a blue chip with a number indicating its score. But a gibberish, nonexistent word will instead contain a red chip with an "X".
@@ -60,7 +62,7 @@ What service do we need an API for? A dictionary. Our way of checking the validi
 
 #### Pearson
 
-[Pearson][pearson] is some mysterious organization that provides free tech services, or something... honestly IDK who they are. But their [Dictionary API][pearson-api] is dead-simple to use. You don't even need to register for a developer key.
+[Pearson][pearson] is a textbook publish. But their [Dictionary API][pearson-api] is dead-simple to use. You don't even need to register for a developer key.
 
 [pearson]: http://developer.pearson.com
 [pearson-api]: http://developer.pearson.com/apis/dictionaries
@@ -95,7 +97,7 @@ Great, you should now have all the tools you need to start looking up words in t
 1. [Fork this repository][word-up-repo].
 2. Clone your forked repo down to your local machine.
 
-[word-up-repo]: https://github.com/launchcodeeducation/word-up
+[word-up-repo]: https://github.com/bgschiller/word-up
 
 ---
 ## A Brief Tour of the Starter Code
@@ -106,7 +108,7 @@ Let's briefly look over the code you have inherited.
 
 Before looking at the code itself, you might want to quickly open up `index.html` in a browser window so you can see what the starter code *does*.
 
-It's not much to look at, to be honest: just a header and a dilapidated scoreboard.
+You can see the skeleton of the game, though nothing _does_ anything yet.
 
 #### index.html
 
@@ -114,29 +116,38 @@ Now open up the source code in your text editor.
 
 In `index.html`, note the following:
 
-- We load some familiar assets, like jQuery and Bootstrap's CSS file.
-- The body of the document has a `<main>` element which is divided into two sections:
+- We load our old friend, Vue.js in the `<head>`.
+- The body of the document has a `<main>` element which is the mount-point for our Vue app. It is divided into two sections:
 	- The `"pregame"` section, which contains elements that will be shown before the game starts. This section contains a scoreboard, and will soon contain a "New Game" button once you finish your first task.
-	- The `"game"` section, which is initially hidden, and will only be revealed once the user clicks the "New Game" button. This section contains the form where the user types, and some containers that will be dynamically injected with chips (one for the letters, one for the submitted words).
-- We load our own `scripts/wordup.js` script.
+	- The `"game"` section, which is initially hidden, and will only be revealed once the user clicks the "New Game" button. This section contains the form where the user types, and some containers that will be filled with chips (one for the letters, one for the submitted words).
+- Inside the `"game"` section, you'll see what looks like a brand new html tag: `<letter-chip>`. This isn't truly an html tag; instead, it's a Vue component. Components are kind of like adding new tags to html that look and act the way we tell them to. It's kind of like how writing a function allows us to extend a programming language. We'll learn more about them soon.
+- Towards the bottom of the body, you'll see a couple of `<script type="text/x-template">` elements. The `text/x-template` piece might be a clue: these pieces represent the _template_ for how we want our custom `<letter-chip>` and `<submitted-word>` components to look.
+- Finally, we load our `scripts/wordup.js` file.
 
 #### scripts/wordup.js
 
 Turn your attention now to the `wordup.js` file.
 
-This is a very large file, but you will definitely find it worth your while to spend 5-10 minutes looking it over and reading all the comments. I wrote those comments myself, and I *will* be offended if you don't read them.
+This is a very large file, but you will definitely find it worth your while to spend 5-10 minutes looking it over and reading all the comments. I wrote those comments myself, and I *will* be offended if you don't read them 😉.
 
 Broadly, the file is split up into a few sections:
 
-- **Model Stuff**
+- **Components**
 
-	In this section we define a variable called `model` which holds all the information we need to keep track of. The model is like the current state of the app.
+	In this section we set up some "components" that we can use within our main Vue. These components are fairly simple, because they have no behavior&mdash;they don't <em>do</em> anything.
 
-	This section also includes helper functions, such as `addNewWordSubmission`, which provide an interface for making changes to the model.
+    Components will sometimes have `computed`, `methods`, `data`, or any of the other sections that we've seen in the main `Vue`. These ones only have two pieces though:
 
-- **View Stuff**
+    - `template`: This defines how the component looks as html. The browser doesn't automatically know what a `<letter-chip>` should look like&mdash;we have to tell it! In this case, these are selectors telling Vue where in `index.html` it can find the template. It's also possible to put the template _right there_ as a string.
+    - `props`: If components are like functions, props are like the arguments to functions. They're ways of changing or customizing how a component looks. For example, the `letter` prop in `<letter-chip>` tells the component which letter it should display.
 
-	This section deals with manipulating the DOM to display everything on screen to show the user the current state of the model.
+- **Game Logic and Utils**
+
+	These sections simply contain a bunch of helper functions relating specifically to the rules and logic of the game.
+
+- **Main Vue**
+
+    - `data`:
 
 	The main function in this section is `render`. Render simply looks at the model, and re-draws everything it might need to draw, based on what the model looks like. Whenever the model changes, we will call `render` again to make sure the view is up to date. We used this same pattern in the FlickList project.
 
@@ -146,33 +157,16 @@ Broadly, the file is split up into a few sections:
 
 	This section is pretty small. It just registers some callback functions as handlers for a few DOM events, such as when the user clicks the "New Game" button, or submits the form.
 
-- **Game Logic**
-
-	This section simply contains a bunch of helper functions relating specifically to the rules and logic of the game.
-
 #### css/styles.css
 
-Finally, take a look at `styles.css`. There are no TODOs on this file, but  in order to do some of your Javascript code, you are going to need to be familar with our scheme for applying CSS classes to the various elements of the page.
-
-Specifically, it is important to understand how we style the various "chips" we are using. All of the different types of chips are some form of the Bootstrap [.tag][bootstrap-tag] class (<-- You should keep that link open in another window).
-
-[bootstrap-tag]: http://v4-alpha.getbootstrap.com/components/tag/
-
-The `.tag` class is just a little colored rectangle with rounded corners, intended for things like the little red number on Facebook that tells you how many new notifications you have. But one nice aspect of tags is that they have `display: inline-block`, which means if you put a bunch of them next to each other, they will wrap around to the next line, rather than disappear off the right-hand edge of the screen.
-
-In our app, we use `tag` as well as some additional custom classes that we define:
-
-- `tag-lg` for the larger tags that display the letter chips and word chips
-- `tag-sm` for the "inner" tags that annotate each chip with its points value or some other information.
-
-Note also that rather than the stable Bootstrap 3, we are using Bootstrap 4, which is still in "alpha" development (we are on the *bleeding edge!*), because we want to use those tags.
+Finally, take a look at `styles.css`. There are no TODOs on this file, but in order to do some of your Javascript code, you are going to need to be familar with some of the CSS classes already defined for us.
 
 ---
 ## Your Tasks
 
 Time to get started!
 
-I have bad news and good news for you. The bad news is that you have a lot (21!) of `TODO`s. The good news is that each task is relatively small, often only one or two lines of code, and you will be given fairly detailed guidance.
+I have bad news and good news for you. The bad news is that you have a lot (17!) of `TODO`s. The good news is that each task is relatively small, often only one or two lines of code, and you will be given fairly detailed guidance.
 
 <img src="http://66.media.tumblr.com/2e96a51d21f3fa17d94af64c8cea61bd/tumblr_ndwyr0McLD1thj99uo4_250.gif" />
 
@@ -182,7 +176,7 @@ Your tasks are as follows:
 
 Add a "New Game" button in `index.html`.
 
-- If you give it the correct id, it will magically work.
+- It will need an `@click` annotation. Which method should it call?
 - If you give it the correct CSS classes, it will magically look nice.
 
 *Confirmation:*
@@ -191,21 +185,20 @@ Add a "New Game" button in `index.html`.
 
 #### 2. Time Remaining
 
-In the `render` function in `wordup.js`, update the *Time Remaining* data on the scoreboard.
+In the pregame section of `index.html`, make the time remaining update with the correct value.
 
-- For reference, we do something fairly similar in the line above, to set the current score.
+- For reference, we do something fairly similar a couple lines below, to set the current score.
 
 *Confirmation:*
 
 - You should see that the time appears on initial page load.
-- Even better, you should also see that the time starts to count down when New Game button is clicked! The reason this works is that, each second, the `startTimer` function is updating the model and re-invoking `render`.
-- You will also notice that every time the timer ticks, the user's text input is wiped clear from the textbox. That's not good! We will fix this soon.
+- Even better, you should also see that the time starts to count down when New Game button is clicked! The reason this works is that, each second, the `startTimer` function is updating `data`, and Vue keeps `data` in sync with our html template.
 
 #### 3. Focus the Textbox
 
-Another thing that should happen, just to make the user experience a little better, is that the textbox should automatically receive "focus", so that the user can start typing immediately without having to physically click on it.
+Another thing that should happen, just to make the user experience a little better, is that the textbox should automatically receive "focus", so that the user can start typing immediately without having to physically click on it. See if you can find an example of this by googling "html input autofocus".
 
-- In the `render` function, use the jQuery `.focus` method to give focus to the textbox.
+- Add the `autofocus` attribute to your `<input type="text"/>`.
 
 *Confirmation:*
 
@@ -219,14 +212,16 @@ In `index.html`, add some instructions above the textbox so the user knows what 
 
 *Confirmation:*
 
-- You should see your instructions... duh.
-- It will obviously look a little wierd, because "what letters?"
+- You should see your instructions on the page.
+- It will obviously look a little weird, because "what letters?"
 
 #### 5. Letters Container
 
-In `index.html`, make an empty `<div>` container so we can "inject" the letter chips into it.
+In `index.html`, create a `<letter-chip>` component for each letter in `allowedLetters`.
 
-- If you give it the correct id, it will magically work.
+- Use a `v-for` to create several `<letter-chip>`s.
+- pass in the `:letter` and `:value` props
+- You can compute the value using the `letterScore` method.
 
 *Confirmation:*
 
@@ -237,96 +232,79 @@ Now would probably be a good time to show your page to a friend and brag, "Check
 
 #### 6. Handle Input Event
 
-The next handful of tasks will tackle that cool feature where we give immediate feedback as the user types. Specifically, we want to provide feedback to inform the user whenever the word she is typing contains any disallowed letters.
+The next handful of tasks will tackle that cool feature where we give immediate feedback as the user types. Specifically, we want to provide feedback to inform the user whenever the word they are typing contains any disallowed letters.
 
-First, we need to be notified whenever any typing ocurs. In `wordup.js`, inside the `$(document).ready` callback, add another event handler, which will fire in response to the textbox's "input" event. An "input" event fires very liberally, basically whenever anything changes. (Recall that in the Pyramid Slide assignment, you listened for this same event on your slider component.)
-
-- Use the jQuery `.on` method, with an event of `"input"`
-- When the event fires, you should update `model.currentAttempt` to be equal to the current value of the textbox.
-- Use the jQuery `.val` method.
+- Use Vue's `v-model` attribute to keep the textbox in sync with the `currentAttempt` data value
 
 *Confirmation:*
 
-- You should now see that you have fixed the annoying bug in which user's text input was getting cleared away every second. Pop quiz: why was it happening, and why did this fix it?
-- Additionally, if you open up the console and type `model.currentAttempt`, you should now see that it always matches the current text value that you have typed into the textbox.
+- If you open up the console and type `app.currentAttempt`, you should now see that it always matches the text value that you have typed into the textbox.
+- Additionally, you can even run `app.currentAttempt = 'tomato'` in the console, and the textbox will update to contain that value.
 
 
 #### 7. Implement the `isDisallowedLetter` function.
 
-Now let's make some visible indication appear. Notice the block of code in `render` underneath where you focus the textbox. This code is attempting to check whether the user's current attempt contains disallowed letters, and if so, will restyle the textbox. The first line invokes a function called `disallowedLettersInWord`, which in turn makes use of another function called `isDisallowedLetter`, which is incomplete! Your job is to implement this function so that given any letter, it returns a boolean indicating whether or not the letter is "disallowed" by the current model.
+Now let's make some visible indication appear. Notice the computed property in `wordup.js` called `containsOnlyAllowedLetters`. This code is attempting to check whether the user's current attempt contains any disallowed letters. It relies on another computed property called `disallowedLettersInWord`, which in turn makes use of a method called `isDisallowedLetter`, which is incomplete! Your job is to implement this function so that given any letter, it returns a boolean indicating whether or not the letter is "disallowed" by the current model.
 
-- You can use the Javascript `indexOf` function as a way to check whether a particular thing is a member of a list.
-- You might find it helpful to test the function in isolation by invoking it from the console, e.g. type `isDisallowedLetter("z")`, etc.
+- You can use the Javascript `includes` function as a way to check whether a particular thing is a member of a list.
+- You might find it helpful to test the function in isolation by invoking it from the console, e.g. type `app.isDisallowedLetter("z")`, etc.
 
 *Confirmation:*
 
 - You should see that the textbox's text turns red whenever you type a disallowed letter.
-- You might also notice that the text *stays* red, even after you delete the disallowed letter. We will fix that soon.
-
+- You should also be able to check `app.isDisallowedLetter("w")` in the JS console.
 
 ### 8. Red Letter Chips
 
 We don't just want the text to turn red, we also want to inform the user about specifically *which* letters are not allowed. We do this by appending little red chips underneath the textbox, one for each disallowed letter.
 
-In the `render` function, we have already written code that generates a list of those little red chips. You simply need to append those elements to the bottom of the `<form>`.
+We have a container already: `<div class="disallowed-letters">` to hold this little chips. There are styles to turn any `<span>` inside this div to look right. Use a `v-for` to make a `<span>` for each disallowed letter.
 
 *Confirmation:*
 
 - You should see the chips!
-- You will also notice that they never go away, and very rapidly start to accumulate. We will address that soon.
 
 ### 9. Game Over
 
 Changing gears now, when time runs out and the game is over, we don't want the user to be able to continue playing the current game. The textbox should become disabled when the game ends.
 
-At the bottom of the `render` function you will see we have a block of code that checks whether the game is over, but the body of that conditional is empty with a TODO waiting for you.
-
-- There is an HTML attribute called `"disabled"`, which you want to set to `true`.
-- Another thing you should do is make sure to clear away any remaining text that was in the textbox. To clear its contents, just set its value equal to the empty string `""`.
-- A neat trick you can use to test your code without having to wait 60 seconds for the timer to run out is to open up the console and manually change the model's `.secondsRemaining` property to something low, e.g. `model.secondsRemaining = 2;`.
+- There is an HTML attribute called `"disabled"`. We can use `v-bind` syntax to set it according to a data value.
+- Use `v-bind` (or the `:` shorthand) to disable the input unless a game is in progress. Is there a data value or computed property we can use to check if a game is in progress?
+- A neat trick you can use to test your code without having to wait 60 seconds for the timer to run out is to open up the console and manually change the model's `.secondsRemaining` property to something low, e.g. `app.secondsRemaining = 2;`.
 
 *Confirmation:*
 
-- The textbox should loose its focus and no longer be usable once the timer runs out.
-- You might also notice that even upon starting a new game, the textbox remains disabled! That's not good. We will address that (and those other loose ends that have been building up) in the next task.
+- The textbox should lose its focus and no longer be usable once the timer runs out.
+- You might also notice that if there's text in the box when the timer runs out, it's frozen there. That's not ideal, but we won't get around to fixing it in these instructions. See if you can tackle it if you're interested.
 
-#### 10. Clear Stuff
+#### 10. Submit word on enter
 
-All of the problems we have created in the previous three Tasks are similar. They are the result of us making a change, but never undoing that change. We can address them all in a very similar way: we simply need to reset everything to a "default" state at the beginning of our `render` function.
+When the user presses the enter key, we want to submit the `currentAttempt`. We'll use the `@keyup.enter` event attribute to call our `addNewWordSubmission` method.
 
-Notice the code block towards the top of `render` whose comment is `// clear stuff`. Your job is to add a few more pieces to this code block:
-
-- The text in the textbox turns red, but it never changes back again. So use the jQuery `.removeClass` method on the textbox to remove the particular CSS class that is causing it to turn red.
-- The red letter chips appear, but never disappear. So use the jQuery `.remove` method to remove all the red letter chips from the document. Remember that jQuery selectors can work with *groups* of elements. So to operate on all these chips at once, you need to use a selector based on a class that all the chips have in common, but no other elements share.
-- The textbox remains disabled after the first game ends. So make sure you set its `"disabled"` attribute to `false`.
+- Add the event handler, being sure to pass along the word as a parameter.
+- In the `addNewWordSubmission`, clear out the value of the text input once you're done with it.
 
 *Confirmation:*
 
-- All the problems above should be fixed!
+- If you type a word with only allowed letters and hit Enter, you'll be able to see it in the `app.wordSubmissions` list via the JS console.
+- If you type a word that contains disallowed letters and hit Enter, the form will clear away, but the new word will not be added.
+
 
 #### 11. Word Submission Chips
 
-Back in the `render` function, append the wordSubmission chips to the DOM.
+In the `#word-submissions` div, add `<submitted-word>`s to the DOM.
 
-- You can do something very similar to what we did for the letter chips. You can get a list of chip elements by mapping a certain function over each submitted word.
-- Then, you can append that list of HTML elements into the appropriate container.
-
-*Confirmation:*
-
-- You should now see the word show up whenever you submit the form.
-
-#### 12. Implement the `containsOnlyAllowedLetters` Function
-
-- This function is important because it is used by the `addNewWordSubmission` function as a way of filtering out illegal words. Once you finish this task, the user will no longer be able to submit a word that contains disallowed letters.
-- You should make use of the `disallowedLettersInWord` function directly above this one.
+- You can do something very similar to what we did for the letter chips.
+- Make sure to pass in props for `:word`, `:score`, `:loading`, and `:is-real-word`.
+- You can use the `wordScore` method to fill in the `:score` prop.
 
 *Confirmation:*
 
-- If you type a word that contains disallowed letters and hit Enter, the form will simply clear away, but the new word will not be added.
+- You should now see the word show up when you submit the form.
 
-#### 13. Pearson URL
+#### 12. Pearson URL
 
-In the `checkIfWordIsReal` function, provide the correct URL for the AJAX call for the particular word that was passed in.
+In the `checkIfWordIsReal` function, provide the correct URL for the `fetch` call for the particular word that was passed in.
 
 *Confirmation:*
 
@@ -335,27 +313,33 @@ In the `checkIfWordIsReal` function, provide the correct URL for the AJAX call f
 	> We received a response from Pearson!
 
 
-#### 14. Is it a Real Word?
+#### 13. Is it a Real Word?
 
 Now that we got a response, we need to use that response to answer the question: Is this word legit?
 
-In the same `success` callback of the AJAX call within the `checkIfWordIsReal` function, we have made a variable called `theAnswer`, and have assigned it a hardcoded value of `true`. Replace the hardcoded value with an actual answer.
+In the same `then` callback of the `fetch` call within the `checkIfWordIsReal` function, we have made a variable called `isARealWord`, and have assigned it a hardcoded value of `true`. Replace the hardcoded value with an actual answer.
 
 Use the following (imperfect) hueristic to decide whether or not we have a "real word" on our hands: The `response` object contains a bunch of properties, one of which is a list of "matching entries" called `results`. If the `results` list is empty, then the word is not real. Otherwise, it is real.
+
+It may be helpful to add a `debugger` statement to the callback, so you can inspect the `resp` variable. It may also be enough to look at what's printed out on the console.
 
 *Confirmation:*
 
 - Nothing visible. You should add your own `console.log` statement to check that this is working properly.
 
-#### 15. Update `.isRealWord` of the Word Submission
+#### 14. Update `.isRealWord` of the Word Submission
 
-Now that you know the correct answer, there is one more thing to do. You must find the appropriate item in `model.wordSubmissions`, and set its `.isRealWord` property accordingly.
+Now that you know the correct answer, there is one more thing to do. You must find the appropriate item in `this.wordSubmissions`, and set its `.isRealWord` property accordingly.
 
 <img src="https://media.giphy.com/media/3o7TKw7vcnyQa0Hldu/giphy.gif" style="width: 300px"/>
 
 Let's back up a sec. (This will be a long digression, so get comfortable.)
 
-You might have noticed, if you poked around on the console, that the `model.wordSubmissions` property is kind of weird. It turns out that the concept of a "word submission" is too complicated to be represented by a string alone. For each word, we need to keep track of two pieces of information: the string itself, and also whether or not the string is a real word (rather than just gibberish). So for each item in the `model.wordSubmissions` list, we actually want an *object* composed of two properties: a string, and a boolean.
+You might have noticed, if you poked around on the console, that the `app.wordSubmissions` property is kind of weird. It turns out that the concept of a "word submission" is too complicated to be represented by a string alone. For each word, we need to keep track of several pieces of information: the string itself, its score, whether we've heard back from the Pearson API and, if so, whether or not the string is a real word (rather than just gibberish). So for each item in the `app.wordSubmissions` list, we actually want an *object* composed of four properties:
+
+1. `word`, a string with the actual word typed by the user
+2. `loading`, a boolean representing whether or not we've heard back from the Pearson API.
+3. `isRealWord`, a boolean which is not added until we hear back from the API.
 
 For example, suppose the user is in the middle of a game, and has previously typed two words: `"honk"`, and `"honq"`. While "honk" is a real word, "honq" is not. And so in this situation, our model should look something like this:
 
@@ -365,8 +349,8 @@ For example, suppose the user is in the middle of a game, and has previously typ
     gameHasStarted: true,
     secondsRemaining: 42,
     wordSubmissions: [
-        { word: "honk", isRealWord: true },
-        { word: "honq", isRealWord: false }
+        { word: "honk", isRealWord: true, loading: false },
+        { word: "honq", isRealWord: false, loading: false }
     ],
     ...
 }
@@ -376,25 +360,25 @@ Makes sense so far? Good, because it's about to get weirder.
 
 The situation is further muddied by the fact that for each word submission, there is a brief period of time during which we *don't yet know* whether or not its string is a real word, because we are still waiting for a response from the dictionary API.
 
-Suppose the user now submits another word, `"chunk"`. We need to add that to our `.wordSubmissions` list, but we do not immediately know whether or not "chunk" is a real word. You and I happen to know that "chunk" is real, but our program is dumb and must defer to the dictionary. So our program makes an AJAX call to the Pearson API. But remember that an AJAX call takes a few seconds to come back with a response, and in the meantime, we still don't have the answer. So during the brief period of time before the response comes back, we want our `model.wordSubmissions` to look like this:
+Suppose the user now submits another word, `"chunk"`. We need to add that to our `.wordSubmissions` list, but we do not immediately know whether or not "chunk" is a real word. You and I happen to know that "chunk" is real, but our program is dumb and must defer to the dictionary. So our program makes an AJAX call to the Pearson API. But remember that an AJAX call takes a few seconds to come back with a response, and in the meantime, we still don't have the answer. So during the brief period of time before the response comes back, we want our `app.wordSubmissions` to look like this:
 
 ```js
 [
-    { word: "honk", isRealWord: true },
-    { word: "honq", isRealWord: false },
-    { word: "chunk" }
+    { word: "honk", isRealWord: true, loading: false },
+    { word: "honq", isRealWord: false, loading: false },
+    { word: "chunk", loading: true }
 ]
 ```
 
-Until we get the response back, the "chunk" object simply does not have a `.isRealWord` property.
+Until we get the response back, the "chunk" object has a `loading` value of `true`, and `isRealWord` is `null`.
 
 As soon as we *do* determine the answer, we can update the model, so that the list becomes:
 
 ```js
 [
-    { word: "honk", isRealWord: true },
-    { word: "honq", isRealWord: false },
-    { word: "chunk", isRealWord: true }
+    { word: "honk", isRealWord: true, loading: false },
+    { word: "honq", isRealWord: false, loading: false },
+    { word: "chunk", isRealWord: true, loading: false }
 ]
 ```
 
@@ -402,48 +386,14 @@ That is how we want our program to behave. Each word submission object should co
 
 Let's finally turn to the task at hand. You are inside the `success` callback of the AJAX call to Pearson. You have just received the response for some particular word (let's continue pretending it is `"chunk"`), and you even know the answer now (either `true` or `false`), assuming you did the previous TODO. Your current `model.wordSubmissions` is a list of objects, most of which contain two properties, but at least one (the one we care about, whose `.word` property is `"chunk"`) does not yet contain a `.isRealWord` property. Your job is to find that list entry, and set its `.isRealWord` property to the correct answer (in this case, `true`).
 
-In coding terms, you simply need to iterate over the list of submissions, and for each submission, check if its `.word` property is equal to the string in question. If so, assign the correct value to its `.isRealWord` property.
+In coding terms, you simply need to iterate over the list of submissions, and for each submission, check if its `.word` property is equal to the string in question. If so, assign the correct value to its `.isRealWord` property. Also, set its `.loading` property to `false`.
 
 *Confirmation:*
 
-- As the user, submit a few words (some real words and some gibberish). Next, after waiting a second, open up the console and type `"model.wordSubmissions"`, and you should see an accurate answer for each item's `.isRealWord` property.
-
-#### 16. Add a Score Chip to Each Word
-
-Now that your model is correct it's time to display that information on screen so the user can see.
-
-- In the `wordSubmissionChip` function, we have already created a little "score" chip element, and stored it in the variable called `scoreChip`.
-- To make this score chip show up on screen, append it into the larger "word" chip that gets returned from the the function.
-
-*Confirmation:*
-
-- You should see a weird `⟐` symbol tacked onto the end of each word.
-
-#### 17. Display the Correct Content on the Score Chip
-
-Now let's replace the weird `⟐` symbol with the appropriate text content.
-
-- If the submission's word is real, then the content should be the score of the word. You can use the `wordScore` function to determine the score of the word. That function still has an unfinished TODO, so you will always get an answer of `0`, but that's fine for now.
-- If the submission's word is not real, then the content should be a capital `"X"`.
-
-*Confirmation:*
-
-- You should see appropriate Xs and 0s, e.g. `honk 0`, `honq X`, `chunk 0`, etc.
+- As the user, submit a few words (some real words and some gibberish). Next, after waiting a second, open up the console and type `"app.wordSubmissions"`, and you should see an accurate answer for each item's `.isRealWord` property.
 
 
-#### 18. Style the Score Chip
-
-Still in the same `wordSubmissionChip` function, give the "score" chip the appropriate CSS classes.
-
-- If the word is real, the score chip should have a blue background.
-- If the word is not real, the score chip should have a red background.
-- In either case, the score chip should have smaller text than the word, and should have a slight margin separating it from the word's text.
-
-*Confirmation:*
-
-- It looks great.
-
-#### 19. Finish Implementing the `wordScore` Function.
+#### 15. Finish Implementing the `wordScore` Function.
 
 Now let's fix those zeros and get the real score showing up next to each word. The problem is that the `wordScore` function is incomplete.
 
@@ -453,7 +403,7 @@ Now let's fix those zeros and get the real score showing up next to each word. T
 
 - You should see a correct score next to each submitted word.
 
-#### 20. Finish Implementing the `currentScore` Function.
+#### 16. Finish Implementing the `currentScore` Function.
 
 This is a rewarding one. You probably noticed that the scoreboard always says 0, no matter what words have been submitted. That's because the `currentScore` function is incomplete!
 
@@ -465,7 +415,7 @@ Notice that it always returns a hardcoded value of `0`. Replace that `0` with th
 
 - You should see real scores on the scoreboard!
 
-#### 21. Finish Implementing the `addNewWordSubmission` Function.
+#### 17. Finish Implementing the `addNewWordSubmission` Function.
 
 Just one last loose-end to tie up! Currently the user is able to cheat by submitting the same word again and again. Let's fix the `addNewWordSubmission` function so that repeats are rejected.
 
@@ -474,13 +424,3 @@ Just one last loose-end to tie up! Currently the user is able to cheat by submit
 *Confirmation:*
 
 - If you try to submit the same word more than once, the textbox should simply clear away your text and no new word submission will be added.
-
----
-## Submitting Your Work
-
-You know the drill:
-
-1. Follow the [submission instructions](..)
-2. Victory!!! All the haters who didn't believe in you are [having a hard time swallowing defeat][colbert-gif].
-
-[colbert-gif]: https://media.giphy.com/media/OxAMjQW6mmA8g/giphy.gif
