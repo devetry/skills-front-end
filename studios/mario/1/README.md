@@ -22,7 +22,7 @@ Here is how to grab the starter code:
 2. Clone the Git repository that contains the starter code for this studio:
 
 	```nohighlight
-	$ git clone https://github.com/LaunchCodeEducation/mario-js.git
+	$ git clone https://github.com/bgschiller/mario-js.git
 	Cloning into 'marios-js'...
 	remote: Counting objects: 103, done.
 	remote: Compressing objects: 100% (70/70), done.
